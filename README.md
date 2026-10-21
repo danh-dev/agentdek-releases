@@ -2,6 +2,13 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.1.15 — 2026-10-21
+- **Code map v2 — đồ thị code thật** (tree-sitter, chạy local): file, class, function, method và các cạnh import / gọi hàm / kế thừa, có số dòng và độ tin cậy. Quét ICard (131 file) dưới 3 giây, quét lại chỉ parse file đã đổi.
+- Tab Code map có canvas tương tác: mức **file** (màu theo cụm, cạnh gộp số lời gọi) và mức **symbol** (lân cận N cấp của node đã chọn); tìm symbol/file, lọc thư mục, ẩn test; panel bên phải hiện ai gọi / gọi ai / thành viên; nút **Ảnh hưởng** tô những gì phụ thuộc vào node (đỏ → vàng theo khoảng cách).
+- `map.md` có thêm mục Hub (symbol được dùng nhiều nhất) và Cụm; `graph.json` tương thích định dạng graphify.
+- Nhân sự có tool `code_graph` (search / explain / path / impact / file) để hỏi "symbol này được ai dùng", "sửa file này ảnh hưởng đâu" trước khi sửa code; brief nhắc dùng, reviewer dùng `impact` để chấm phạm vi sửa.
+- Ignore mặc định tránh nhiễu (`*.d.ts` sinh tự động, dist, lockfile, test) + file `.agentdekignore` trong workspace.
+
 ## 0.1.14 — 2026-10-21
 - Canvas workflow thiết kế lại: nút **Bắt đầu** riêng nối vào khối đầu (kéo sang khối khác để đổi điểm vào), nhãn **kết thúc** ở khối cuối; khối có dải màu theo loại, nhân sự hiện avatar; cổng ra có nhãn `pass/fail`, `then/else`, `approve/reject` ngay cạnh cổng.
 - Cạnh có mũi tên, màu theo ý nghĩa (xanh/đỏ/xám); **vòng sửa lại** vẽ thành cung riêng phía dưới, không còn đè lên cạnh tiến; rê chuột lên cạnh để xoá bằng nút ×; khi kéo nối, cổng hợp lệ sáng lên.
