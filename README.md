@@ -2,6 +2,26 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.2.0 — 2026-10-21
+Giao diện làm lại toàn bộ theo design system AgentDek (Claude Design, phong cách desktop app như Jira / VS Code: khối rõ, nút to dễ bấm, bố cục rộng, Manrope 14px, Lucide). Không đổi dữ liệu trên đĩa — mở lên là dùng ngay.
+
+**Khung ứng dụng**
+- Thanh tiêu đề 32px riêng của app (menu Tệp · Xem · Trợ giúp, tên cửa sổ, nút thu/phóng/đóng của Windows); thanh trạng thái 24px dưới cùng (server, kết nối AI, run đang chạy, việc chờ bạn, phiên bản/cập nhật).
+- Thanh trên 48px: chọn dự án (phạm vi làm việc hiện tại), ô **Tìm hoặc gõ lệnh (Ctrl+K)**, chuông việc chờ, nút **Giao việc (Ctrl+N)** dùng chung cho nhân sự lẫn workflow — form 2 cột, gợi ý theo loại việc, báo khi kết nối AI chưa sẵn sàng.
+- Thanh bên 260px thu gọn được (Ctrl+B): Làm việc (Hộp thư · Dự án với tab con · Lịch sử) · Xây đội (Nhân sự · Workflows · Kiến thức chung) · Hệ thống (Kết nối AI · Cài đặt); đổi giao diện sáng/tối ở đáy.
+- Dữ liệu dùng chung một bộ nhớ đệm, tự cập nhật theo luồng sự kiện; thông báo trong app (toast) song song với toast Windows.
+
+**Các màn hình**
+- **Hộp thư** — màn mặc định: *Chờ bạn* (câu hỏi, xin phép, review, duyệt, nhập liệu — kể cả từ run con), *Đang chạy*, *Cần chú ý* (run gián đoạn có nút Chạy tiếp, run lỗi 24h, đề xuất kiến thức chờ duyệt); lọc theo dự án.
+- **Run** — màn theo dõi 3 cột: trái là timeline các bước (nhánh song song thụt vào, link run con, bấm để lọc), giữa là transcript (lượt của bạn / của nhân sự, mỗi lần gọi tool là một dòng gập được, sơ đồ workflow thu gọn được) hoặc chi tiết từng bước, phải là việc đã giao · artifacts · chi phí & thời gian · run con. Khi run chờ bạn, **khung trả lời** neo ngay trên ô nhắn tin (câu hỏi dạng nút chọn, xin phép hiện lệnh, form nhập liệu, duyệt/review có ô nhận xét). Nhắn tiếp cho nhân sự ngay dưới transcript (Ctrl+Enter).
+- **Nhân sự** — danh sách bên trái (tìm theo tên / chức danh / loại việc), hồ sơ bên phải với tab Hồ sơ (form có thanh Lưu/Hoàn tác) · System prompt · Kỹ năng (danh sách + trình soạn, Ctrl+S) · Phiên bản · Lịch sử. **Tuyển nhân sự** là hộp thoại; **Giao việc** mở form chung đã chọn sẵn nhân sự.
+- **Workflows** — canvas toàn khung với thanh công cụ 48px (menu **Thêm khối**, Sắp xếp, Vừa khung, Thuộc tính workflow); bấm khối → bảng thuộc tính 420px bên phải; tab YAML (Ctrl+S kiểm tra schema rồi lưu), Phiên bản (xem YAML / khôi phục), Lịch sử. Triggers (org/triggers.yaml) nằm cuối danh sách.
+- **Dự án** — danh sách bên trái, tiêu đề dự án có đường dẫn workspace / kho dự án kèm nút Mở; tab Kanban (6 cột, kéo thả, hộp thoại task, lập kế hoạch từ yêu cầu) · Kết quả (chi phí tham khảo + bảng run) · Code map (đồ thị / map.md, quét lại) · Knowledge · Notes (đề xuất chờ duyệt) · Cài đặt (form có thanh Lưu, quyền workspace, di chuyển kho dự án). **Dự án mới** là hộp thoại với bộ chọn thư mục kiểu desktop.
+- **Lịch sử giao việc** — gom theo ngày, chi phí tham khảo 30 ngày, dọn run cũ.
+- **Kết nối AI** — danh sách bên trái + form bên phải (Thông tin · Kết nối với nút Kiểm tra · Model & giá · Nâng cao), bảng giá tham khảo là một mục trong danh sách.
+- **Cài đặt** — kiểu VS Code: cây mục bên trái + ô tìm cài đặt; Chung · Thông báo · Chạy song song · Cập nhật · Sao lưu & chuyển máy · Dọn run cũ · Giới thiệu.
+- **Kiến thức chung** — danh sách file + trình soạn có lịch sử phiên bản và đề xuất của nhân sự.
+
 ## 0.1.18 — 2026-10-21
 - **Khối Song song** trong workflow: nhiều nhánh (nhân sự hoặc workflow) chạy cùng lúc, mỗi nhánh là run con riêng. Kết thúc khi *tất cả* / *nhánh đầu tiên* / *đủ N nhánh* xong (nhánh còn lại được huỷ); nhánh lỗi thì dừng ngay hoặc để nhánh khác chạy tiếp; giới hạn số nhánh cùng lúc; workspace chung (mỗi nhánh được dặn phạm vi) hoặc git worktree riêng.
 - **Khối Fan-out** (map): tự tạo nhánh theo danh sách — ví dụ từng task trong JSON của bước lập kế hoạch, hoặc mỗi dòng một mục — với cùng một nhánh mẫu (`{{item}}`, `{{index}}`).
