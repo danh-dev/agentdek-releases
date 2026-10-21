@@ -2,6 +2,18 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.1.18 — 2026-10-21
+- **Khối Song song** trong workflow: nhiều nhánh (nhân sự hoặc workflow) chạy cùng lúc, mỗi nhánh là run con riêng. Kết thúc khi *tất cả* / *nhánh đầu tiên* / *đủ N nhánh* xong (nhánh còn lại được huỷ); nhánh lỗi thì dừng ngay hoặc để nhánh khác chạy tiếp; giới hạn số nhánh cùng lúc; workspace chung (mỗi nhánh được dặn phạm vi) hoặc git worktree riêng.
+- **Khối Fan-out** (map): tự tạo nhánh theo danh sách — ví dụ từng task trong JSON của bước lập kế hoạch, hoặc mỗi dòng một mục — với cùng một nhánh mẫu (`{{item}}`, `{{index}}`).
+- Kết quả gộp dùng tiếp như khối thường: `outputs.<khối>.branches.<nhánh>.summary`, file của mọi nhánh vào `inputs/<khối>/<nhánh>/`; review/duyệt sau khối song song xem toàn bộ.
+- Canvas: khối song song hiện từng nhánh với trạng thái riêng (đang chạy / xong / lỗi / huỷ); trang run liệt kê nhánh thụt vào dưới khối, mỗi nhánh có link run con. Gián đoạn giữa chừng: nhánh đã xong được giữ, Chạy tiếp chỉ làm lại nhánh dở; nhiều nhánh cùng chờ bạn thì run cha báo "+n nhánh khác".
+- Workflow mẫu `parallel-feature` (thiết kế + backend song song → reviewer → duyệt).
+
+## 0.1.17 — 2026-10-21
+- **Sao lưu & chuyển máy** (Cài đặt): xuất một file zip gồm tổ chức (nhân sự kèm lịch sử phiên bản, workflow, kiến thức chung, bảng giá, nhà cung cấp) + mọi kho dự án (kể cả kho đặt ngoài AgentDek) + cài đặt app; tuỳ chọn kèm lịch sử run; hoặc chỉ xuất tổ chức để chia sẻ bộ nhân sự. API key không bao giờ nằm trong bản sao lưu.
+- Nhập: chọn file zip (hoặc gõ đường dẫn) → xem trước nội dung và mục trùng tên → **Gộp** (tick từng mục muốn ghi đè, phần còn lại giữ bản hiện có) hoặc **Thay toàn bộ**. Trước khi nhập, app tự sao lưu dữ liệu hiện tại vào `data/backups`. Không nhập khi còn run đang chạy.
+- Bản sao lưu tạo trên máy hiện ở danh sách trong Cài đặt: tải về (hộp thoại Lưu của Windows), nhập lại, xoá. Trong app desktop, tải xong tự mở Explorer đến file.
+
 ## 0.1.16 — 2026-10-21
 - Sửa lỗi app sập ngay khi mở ("The argument 'filename' must be a file URL…"): module đồ thị code resolve grammar tree-sitter lúc khởi động theo cách chỉ chạy được trong ESM; giờ resolve khi cần và tương thích bundle của Electron.
 
