@@ -2,6 +2,17 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.1.14 — 2026-10-21
+- Canvas workflow thiết kế lại: nút **Bắt đầu** riêng nối vào khối đầu (kéo sang khối khác để đổi điểm vào), nhãn **kết thúc** ở khối cuối; khối có dải màu theo loại, nhân sự hiện avatar; cổng ra có nhãn `pass/fail`, `then/else`, `approve/reject` ngay cạnh cổng.
+- Cạnh có mũi tên, màu theo ý nghĩa (xanh/đỏ/xám); **vòng sửa lại** vẽ thành cung riêng phía dưới, không còn đè lên cạnh tiến; rê chuột lên cạnh để xoá bằng nút ×; khi kéo nối, cổng hợp lệ sáng lên.
+- Theo dõi run ngay trên canvas: khối đang chạy nhấp nháy xanh, khối chờ bạn viền vàng, cạnh đang đi "chảy" theo mũi tên, cạnh đã qua có dấu ✓, khối đã xong mờ nhẹ, hiện "vòng 2"; nút **Theo dõi** tự cuộn tới khối đang hoạt động.
+- Nút **Sắp xếp** tự động (phím A), **Vừa khung** (phím F), lưới bắt dính 20px, chú giải màu; xoá khối bằng phím Delete (tự gỡ mọi liên kết); hỗ trợ giao diện sáng.
+
+## 0.1.13 — 2026-10-21
+- Editor workflow: khối mới đặt cạnh khối đang chọn và tự cuộn tới; Hoàn tác (Ctrl+Z) cho mọi thao tác trên canvas/panel; xoá hay khôi phục khối thì canvas tự vừa khung.
+- Workflow có lịch sử phiên bản: mỗi lần Lưu giữ bản trước, nút Lịch sử để xem YAML cũ hoặc khôi phục.
+- Changelog của dự án (file này) được đẩy lên repo phát hành và dùng làm ghi chú release.
+
 ## 0.1.12 — 2026-10-21
 - Chạy song song có kiểm soát: giới hạn số run nhân sự đồng thời (Cài đặt → Chạy song song, mặc định 3); vượt thì xếp hàng.
 - Khoá workspace: hai run sửa trực tiếp cùng một thư mục không chạy cùng lúc — run sau chờ run trước, trang run hiện đang chờ ai.
