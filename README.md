@@ -2,6 +2,9 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.1.16 — 2026-10-21
+- Sửa lỗi app sập ngay khi mở ("The argument 'filename' must be a file URL…"): module đồ thị code resolve grammar tree-sitter lúc khởi động theo cách chỉ chạy được trong ESM; giờ resolve khi cần và tương thích bundle của Electron.
+
 ## 0.1.15 — 2026-10-21
 - **Code map v2 — đồ thị code thật** (tree-sitter, chạy local): file, class, function, method và các cạnh import / gọi hàm / kế thừa, có số dòng và độ tin cậy. Quét ICard (131 file) dưới 3 giây, quét lại chỉ parse file đã đổi.
 - Tab Code map có canvas tương tác: mức **file** (màu theo cụm, cạnh gộp số lời gọi) và mức **symbol** (lân cận N cấp của node đã chọn); tìm symbol/file, lọc thư mục, ẩn test; panel bên phải hiện ai gọi / gọi ai / thành viên; nút **Ảnh hưởng** tô những gì phụ thuộc vào node (đỏ → vàng theo khoảng cách).
