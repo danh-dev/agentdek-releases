@@ -2,6 +2,12 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.2.2 — 2026-10-21
+- **Bỏ bước Publish và bản nháp của nhân sự.** Mỗi lần lưu trong app (tạo nhân sự, sửa hồ sơ, sửa system prompt, thêm/xoá kỹ năng, khôi phục) tự thành một phiên bản mới bất biến trong `.versions/v<N>/`, kèm ghi chú tự động ("Sửa system prompt", "Thêm skill logo"…); lưu mà nội dung không đổi thì không tạo phiên bản; `memory.md` không tính vào phiên bản. Nhân sự cũ đang ở v0 tự thành v1 khi mở app.
+- Sửa file nhân sự bên ngoài app (VS Code, git): lần tới nhân sự nhận việc, thay đổi được ghi thành phiên bản mới với ghi chú "Thay đổi ngoài ứng dụng" — run nào cũng biết chính xác mình đã dùng phiên bản + hash nào.
+- Việc mới luôn dùng phiên bản mới nhất: bỏ ô chọn phiên bản trong hộp Giao việc và trong block workflow (YAML cũ có `version: draft` vẫn đọc bình thường; run cũ ghi `draft` hiển thị là "nháp (cũ)"). Workflow chốt phiên bản lúc bắt đầu chạy — sửa nhân sự khi workflow đang chờ duyệt thì các bước sau vẫn chạy bằng phiên bản đã chốt, việc giao mới mới dùng bản mới. Kế hoạch Kanban không chốt: mỗi task là một run riêng, sửa prompt xong task kế tiếp dùng ngay.
+- Tab **Phiên bản** của nhân sự: danh sách bên trái; bên phải xem nội dung hoặc so sánh với bản đang dùng; **Khôi phục** tạo phiên bản mới mang nội dung cũ, lịch sử giữ nguyên.
+
 ## 0.2.1 — 2026-10-21
 Giao diện làm lại toàn bộ theo design system AgentDek (Claude Design, phong cách desktop app như Jira / VS Code: khối rõ, nút to dễ bấm, bố cục rộng, Manrope 14px, Lucide). Không đổi dữ liệu trên đĩa — mở lên là dùng ngay.
 
