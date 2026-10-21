@@ -21,6 +21,7 @@ Giao diện làm lại toàn bộ theo design system AgentDek (Claude Design, ph
 - **Kết nối AI** — danh sách bên trái + form bên phải (Thông tin · Kết nối với nút Kiểm tra · Model & giá · Nâng cao), bảng giá tham khảo là một mục trong danh sách.
 - **Cài đặt** — kiểu VS Code: cây mục bên trái + ô tìm cài đặt; Chung · Thông báo · Chạy song song · Cập nhật · Sao lưu & chuyển máy · Dọn run cũ · Giới thiệu.
 - **Kiến thức chung** — danh sách file + trình soạn có lịch sử phiên bản và đề xuất của nhân sự.
+- **Form tạo/sửa mở dạng bảng trượt bên phải** (full chiều cao, 640–960px tuỳ form): Giao việc, Tuyển nhân sự, Dự án mới, Thêm kết nối, Task Kanban, Lập kế hoạch, Đề xuất kiến thức. Đóng khi đang nhập dở sẽ hỏi trước. Hộp thoại nhỏ giữa màn chỉ còn cho xác nhận, nhập một dòng và chọn thư mục.
 
 ## 0.1.18 — 2026-10-21
 - **Khối Song song** trong workflow: nhiều nhánh (nhân sự hoặc workflow) chạy cùng lúc, mỗi nhánh là run con riêng. Kết thúc khi *tất cả* / *nhánh đầu tiên* / *đủ N nhánh* xong (nhánh còn lại được huỷ); nhánh lỗi thì dừng ngay hoặc để nhánh khác chạy tiếp; giới hạn số nhánh cùng lúc; workspace chung (mỗi nhánh được dặn phạm vi) hoặc git worktree riêng.
