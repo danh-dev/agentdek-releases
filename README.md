@@ -2,6 +2,14 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.3
+**DeepSeek: cập nhật theo tài liệu API mới (DeepSeek V4).**
+
+- **Preset DeepSeek** đổi sang model hiện hành: `deepseek-flash` (DeepSeek-V4.1-Flash, mặc định, đọc được ảnh) và `deepseek-v4-pro` (việc khó); Base URL `https://api.deepseek.com` đúng như tài liệu; timeout mỗi request 10 phút vì thinking mode bật sẵn. Kết nối DeepSeek tạo trước đây còn dùng `deepseek-chat` / `deepseek-reasoner` — tên cũ không còn trong tài liệu, nên đổi *Model mặc định* sang `deepseek-flash`.
+- **Giá tham khảo** cho `deepseek-flash` ($0,3 / $1,2 / cache $0,006) và `deepseek-v4-pro` ($1,32 / $3,96 / cache $0,044) mỗi 1M token, tính theo giờ cao điểm — ngoài giờ cao điểm DeepSeek tính một nửa, nên ≈USD trong AgentDek không bao giờ thấp hơn thực tế.
+- **Hướng dẫn kết nối DeepSeek** viết lại: model nào cho việc gì, khung giờ cao điểm theo giờ Việt Nam (thứ 2–6, 08:00–11:00 và 13:00–17:00), cách mức suy luận được DeepSeek quy đổi, và cổng định dạng Anthropic dùng với preset Claude.
+- **Phòng lỗi 400 khi Master chạy trên DeepSeek và lịch sử dài được tóm tắt**: ở thinking mode có tool, DeepSeek bắt gửi lại phần suy luận của mọi lượt trước — lượt "Đã nắm." do AgentDek chèn khi tóm tắt giờ mang kèm phần suy luận với các nhà cung cấp có suy luận (nhà cung cấp khác giữ nguyên).
+
 ## 0.3.2
 **Update UX/UI**
 
