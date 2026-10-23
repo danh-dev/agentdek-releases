@@ -2,6 +2,13 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.6
+**ACP: chọn được model của agent, bỏ các ô giá không dùng tới.**
+
+- **Danh sách model từ agent**: *Kiểm tra* (khối Đăng nhập hoặc nút Kiểm tra kết nối) đọc danh sách model agent ACP đưa ra khi mở phiên — theo bộ chọn `configOptions` loại *model* của ACP, hoặc danh sách `models` kiểu Gemini CLI — và điền vào *Model gợi ý* (chỉ khi ô đang trống, không ghi đè danh sách bạn đã sửa). Agent không đưa danh sách thì ô để trống như trước.
+- **Model của nhân sự được dùng thật**: lúc bắt đầu run (cả khi nhắn tiếp), AgentDek chuyển phiên của agent sang model ghi trong hồ sơ nhân sự hoặc *Model mặc định* của kết nối. Model agent không có thì giữ model mặc định của agent và ghi một dòng trong transcript. Trước đây model đặt cho kết nối ACP bị bỏ qua.
+- **Bỏ các ô giá với kết nối ACP**: thay bằng một dòng giải thích — agent ACP không báo token, chạy bằng hạn mức gói / tài khoản của agent, chi phí hiện "—" trừ khi agent tự báo.
+
 ## 0.3.5
 **ACP: thấy ngay agent đã tải chưa, đăng nhập tách riêng và chép được link đăng nhập.**
 
