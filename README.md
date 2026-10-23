@@ -2,6 +2,20 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.2
+**Update UX/UI**
+
+### Nhật ký thay đổi trong Cài đặt → Cập nhật
+- Phần dưới tab **Cập nhật** giờ là **Nhật ký thay đổi**: tải CHANGELOG của kênh phát hành (README.md của `agentdek-releases`) từ GitHub mỗi lần mở tab và mỗi khi *Kiểm tra ngay* / tự kiểm tra xong. Mỗi phiên bản một mục: số phiên bản, ngày, nhãn **Đang dùng** cho bản đang chạy và **Bản mới** cho bản chưa cài — đọc được bản mới có gì trước khi bấm *Tải về*.
+- Khối cập nhật (trạng thái, Kiểm tra ngay, Tự kiểm tra) đứng yên ở trên; **chỉ danh sách nhật ký cuộn**.
+- Không vào được GitHub (mất mạng, bị chặn): hiện bản đã lưu lần trước kèm thời điểm lưu và lý do. Nút **Tải lại** và **Mở trên GitHub** ở đầu khối.
+- Sửa hiển thị Markdown (Chat, nhật ký): chữ đậm chứa chữ nghiêng kết thúc cùng lúc (`**Preset *Codex***`) không còn hiện dấu `**` thô.
+
+### Hướng dẫn kết nối ngay trong form
+- **Khối *Hướng dẫn kết nối*** cạnh form Kết nối AI (và màn Thiết lập lần đầu): các bước làm theo cho từng loại — tạo key ở đâu (link mở trình duyệt), lệnh cài / đăng nhập có nút chép (cú pháp Git Bash), dán vào ô nào, kiểm tra ra sao — kèm mục *Lưu ý* (chi phí, free tier, nhiều tài khoản, lỗi hay gặp). Bước cuối tự đánh dấu xong khi *Kiểm tra kết nối* xanh.
+- Có cho mọi preset: Claude (API key / gói Pro-Max), Meta Muse, OpenAI, Gemini (kèm kích hoạt credit gói Google AI Pro/Ultra và spend cap), OpenRouter, DeepSeek, Groq, Ollama, LM Studio, endpoint tuỳ chỉnh, Codex (gói ChatGPT / một lượt), Gemini CLI, Claude Code CLI, CLI tuỳ chỉnh, Mock. Kết nối đã lưu tự nhận hướng dẫn theo cấu hình (base URL, lệnh, loại xác thực).
+- Cửa sổ rộng: hướng dẫn nằm cột phải ngay cạnh form; hẹp: nằm trên form, thu gọn sẵn với kết nối đã lưu (nút *Hiện*).
+
 ## 0.3.1
 **Kết nối AI: Codex chạy bằng gói ChatGPT như một nhân sự đầy đủ, thêm Meta Muse, sửa Gemini, tính đúng giá prompt cache.**
 
