@@ -2,7 +2,28 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
-## 0.3.0 — chưa phát hành
+## 0.3.1
+**Kết nối AI: Codex chạy bằng gói ChatGPT như một nhân sự đầy đủ, thêm Meta Muse, sửa Gemini, tính đúng giá prompt cache.**
+
+### Codex (gói ChatGPT) — loại kết nối mới
+- **Preset *Codex (gói ChatGPT)*** (loại kết nối `codex`): AgentDek chạy `codex app-server` — cổng tích hợp chính thức của OpenAI — với đăng nhập ChatGPT của `codex login`, không tốn API. Nhân sự Codex giờ làm việc gần như nhân sự Claude: transcript từng lệnh / file sửa / chữ trả lời trực tiếp, **xin phép** giữa chừng (gate như Claude), **nhắn tiếp cùng phiên** (thread Codex được nối lại — Codex cần hỏi gì thì kết thúc lượt bằng câu hỏi, bạn trả lời bằng *Nhắn tiếp*), token input / cache / output và ≈USD tham khảo theo bảng giá.
+- **AgentDek quyết mọi lệnh Codex muốn chạy**: Codex chạy ở chế độ hỏi trước mọi lệnh không thuộc loại chỉ-đọc; chặn cứng của app (`taskkill /IM node.exe`…) luôn từ chối, quyền `shell` của dự án (`allow` / `ask` / `deny`) và quy tắc ghi được áp như với Claude; Codex sửa file bị cấm (vd. `.env`) → lượt bị dừng. Sandbox lệnh mặc định `workspace-write`: chỉ ghi được thư mục dự án của run và workspace; mạng theo quyền `network` của dự án.
+- **Kiểm tra kết nối** đọc tài khoản đang đăng nhập (email, gói) và danh sách model từ Codex — không gọi model, không tốn hạn mức. Chưa đăng nhập → báo chạy `codex login`.
+- **Nhiều tài khoản ChatGPT**: mỗi kết nối Codex đặt một thư mục **CODEX_HOME** riêng, đăng nhập từng thư mục bằng `CODEX_HOME=<thư mục> codex login`.
+- Tuỳ chọn: lệnh Codex (có thể trỏ thẳng file `codex.js`), sandbox, mức suy luận, timeout một lượt, tham số thêm cho app-server, env.
+- Chưa hỗ trợ: Master, planner và khối LLM không chạy trên kết nối Codex (cần kết nối Claude hoặc API). Preset cũ gọi `codex exec` đổi tên thành *Codex CLI (một lượt)*.
+- Model Codex mới (vd. `gpt-6.1-sol`) chưa có trong bảng giá mặc định: thêm một dòng ở *Kết nối AI → Bảng giá* để thấy ≈USD.
+
+### Kết nối AI khác
+
+- **Preset mới *Meta Muse (Model API)***: kết nối API tới `https://api.meta.ai/v1`, model `muse-spark-1.1` (có sẵn `muse-spark-1.2`), giá tham khảo $1,25 / $4,25 / cache $0,15 mỗi 1M token, timeout mỗi request 10 phút cho lượt suy luận dài. Key tạo tại dev.meta.ai.
+- **Mức suy luận (reasoning effort)** cho kết nối API: *Nâng cao* → *Mức suy luận* (Mặc định của model / Thấp / Vừa / Cao), gửi `reasoning_effort` cho cả nhân sự, Master, planner và khối LLM. Để trống thì không gửi gì (Muse không nhận giá trị `none`).
+- **Token prompt cache được tính đúng giá** với kết nối API: phần đầu vào đọc từ cache (`cached_tokens`) tách riêng khỏi input và tính theo giá *cache read* — trước đây tính bằng giá input đầy đủ, nên chi phí Muse/OpenAI/Gemini của vòng lặp agent dài bị ước tính cao. Form kết nối có thêm ô **Giá cache read** (trống = 1/10 giá input); bảng giá mặc định có dòng `muse-spark*`.
+- **Gemini (API key)**: *Kiểm tra kết nối* lấy đúng danh sách model (bỏ tiền tố `models/` mà endpoint OpenAI của Google trả về). Mô tả preset nói rõ gói Google AI Pro/Ultra không cộng hạn mức vào API key.
+- **Gemini CLI**: từ 18/6/2026 Google không còn phục vụ Gemini CLI qua đăng nhập Google (free, AI Pro, AI Ultra). Preset giờ dùng Gemini API key: dán vào ô API key (lưu trong `data/secrets.json`), AgentDek đưa vào biến `GEMINI_API_KEY` khi chạy — key không nằm trong `providers.yaml`. Áp dụng cho mọi kết nối CLI có đặt *Biến môi trường chứa key*.
+- **Kết nối CLI không còn treo vì stdin**: stdin của process CLI luôn được đóng ngay khi chạy (trước đây chỉ đóng khi prompt đi qua stdin), tránh trường hợp CLI chờ stdin mãi khi prompt nằm trong tham số.
+
+## 0.3.0 — 2026-10-22
 **Hai thay đổi lớn: Chat với AI chủ Master, và worktree là mặc định.** Trong **Chat**, bạn nói việc cần làm với *Master* — một "trưởng nhóm" AI chỉ đọc và điều phối: nó chia việc, giao cho nhân sự / workflow, theo dõi run con và báo lại, theo một trong ba chế độ tự chủ bạn chọn cho từng phiên. Trên dự án git, **mỗi run làm trong một git worktree riêng** — nhiều run chạy song song trên cùng dự án, kết quả tự về nhánh chính. Cần Git for Windows ≥ 2.38 cho chế độ worktree. Hướng dẫn sử dụng có hai mục mới: *9. Worktree & nhánh* và *10. Chat với Master*.
 
 ### Chat với AI chủ Master
