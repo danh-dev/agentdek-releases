@@ -2,6 +2,14 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.5
+**ACP: thấy ngay agent đã tải chưa, đăng nhập tách riêng và chép được link đăng nhập.**
+
+- **Trạng thái agent đã tải**: preset dùng ACP Registry (Google Antigravity) giờ kiểm tra máy trước — agent đã tải (cho kết nối khác hoặc lần trước) thì hiện *Đã tải bản X · bản mới nhất* và tự điền lệnh, không bắt tải lại; registry có bản mới thì hiện nút *Cập nhật lên Y*. Chỉ khi máy chưa có mới hiện *Tải agent*. Không vào được GitHub vẫn dùng bản đã tải. Mỗi bản tải về có file `agentdek-install.json` ghi lệnh và tham số.
+- **Khối Đăng nhập riêng** cho kết nối ACP: *Đã đăng nhập* (kèm tài khoản khi agent cho biết — ACP không có lệnh hỏi tài khoản, nên agent không báo thì ghi rõ "agent không cho biết tài khoản đang dùng") / *Chưa đăng nhập* với nút **Đăng nhập** / lỗi kèm lý do; nút *Kiểm tra* xem lại trạng thái, *Đăng nhập lại* khi cần. Trạng thái tự kiểm tra khi mở kết nối.
+- **Chép link đăng nhập để mở ở trình duyệt khác**: khi bấm Đăng nhập, AgentDek chặn lệnh "mở trình duyệt" của agent (qua biến `BROWSER` — áp dụng với agent tôn trọng biến này) và bắt cả link agent in ra; link hiện ngay trong khối với **Chép link** và *Trình duyệt mặc định*. Agent nào bỏ qua `BROWSER` thì vẫn tự mở trình duyệt mặc định, link (nếu agent in ra) vẫn chép được. Có nút *Huỷ*; tối đa 5 phút.
+- **Kiểm tra kết nối không còn tự đăng nhập**: chỉ báo trạng thái (không mở trình duyệt, không gọi model). Run của nhân sự cũng không bao giờ tự mở đăng nhập của agent — chưa đăng nhập thì báo lỗi chỉ đường tới Kết nối AI → Đăng nhập (cách đăng nhập bằng API key đã chọn vẫn tự dùng như trước).
+
 ## 0.3.4
 **Kết nối ACP: chạy Google Antigravity bằng gói Google AI Pro/Ultra, không cần API key.**
 
