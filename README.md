@@ -2,6 +2,23 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.4
+**Kết nối ACP: chạy Google Antigravity bằng gói Google AI Pro/Ultra, không cần API key.**
+
+### Loại kết nối mới: ACP agent
+- AgentDek giờ là **client của Agent Client Protocol (ACP)** — chuẩn mở mà Zed, JetBrains dùng để nói chuyện với agent lập trình. Agent chạy như một nhân sự đầy đủ: transcript từng tool, **xin phép qua gate của AgentDek**, **nhắn tiếp cùng phiên** (phiên ACP được nạp lại, không chép lại lịch sử cũ vào transcript), huỷ giữa chừng.
+- **Mọi việc chạm vào máy đều đi qua AgentDek**: agent đọc/ghi file bằng AgentDek (quy tắc đọc/ghi của dự án áp dụng — ví dụ không ghi được `.env`), chạy lệnh bằng terminal của AgentDek (chặn cứng `taskkill /IM node.exe`… và quyền `shell` của dự án áp dụng trước khi lệnh chạy). Agent xin phép thì AgentDek trả lời bằng chính các lựa chọn của agent (cho phép một lần / luôn / từ chối).
+- **Đăng nhập**: *Kiểm tra kết nối* khởi động agent, mở một phiên thử (không gọi model, không tốn hạn mức) và — nếu agent báo chưa đăng nhập — gọi đăng nhập của chính agent (có thể mở trình duyệt). Kết quả liệt kê các *Cách đăng nhập* agent hỗ trợ để chọn.
+- Chi phí: ACP không báo số token; agent báo chi phí thì AgentDek giữ nguyên số đó. Chưa dùng được cho Master, planner, khối LLM.
+
+### Preset mới
+- **Google Antigravity (gói AI Pro/Ultra)**: nút **Tải agent** tải *Antigravity ACP server* chính thức của Google LLC từ ACP Registry đúng bản cho máy (Windows/macOS/Linux), kiểm tra sha256, giải nén vào `data/acp-agents/` (không nằm trong sao lưu) và điền sẵn lệnh; *Cập nhật agent* tải bản mới hơn. Kiểm tra kết nối lần đầu mở trình duyệt để đăng nhập tài khoản Google có gói. Hướng dẫn kết nối khuyên dùng tài khoản Google phụ — Google từng khoá tài khoản dùng đăng nhập Antigravity qua công cụ bên thứ ba.
+- **Gemini CLI (ACP, API key)**: Gemini CLI ở chế độ `--acp` — như preset Gemini CLI nhưng có xin phép, transcript chi tiết, nhắn tiếp. Preset cũ đổi tên thành *Gemini CLI (một lượt)*.
+- **Agent ACP tuỳ chỉnh**: bất kỳ agent nói ACP qua stdio.
+
+### Bên trong
+- Phần giao tiếp JSON-RPC qua stdio dùng chung cho Codex App Server và ACP.
+
 ## 0.3.3
 **DeepSeek: cập nhật theo tài liệu API mới (DeepSeek V4).**
 
