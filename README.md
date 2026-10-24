@@ -2,6 +2,18 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.8
+**ACP: giới hạn số bước, nhắn tiếp không phải khởi động lại agent, ranh giới cho run ngoài dự án.**
+
+- **Max turns áp cho kết nối ACP**: mỗi lượt (giao việc hoặc một lần nhắn tiếp) đếm số lần gọi công cụ đã chạy xong; chạm *Max turns* trong hồ sơ nhân sự thì AgentDek dừng lượt đó, giữ nguyên file đã tạo, run kết thúc bình thường kèm dòng "Agent dừng vì chạm giới hạn N bước — nhắn «tiếp» để làm tiếp" (nhắn tiếp nối đúng phiên cũ). Lần gọi công cụ lỗi (mất kết nối, timeout…) không tính vào giới hạn, nhưng lỗi liên tiếp tới cùng số đó cũng dừng lượt để agent không lặp lỗi mãi. Antigravity gọi từng công cụ một nên thường cần nhiều bước hơn Claude — nâng *Max turns* của nhân sự dùng Antigravity (vd. 40–60) nếu việc dài. Trước đây *Max turns* không có tác dụng với ACP.
+- **Nhắn tiếp không phải chờ agent khởi động lại**: lượt xong bình thường thì tiến trình agent ACP được giữ tối đa 10 phút; nhắn tiếp trong khoảng đó dùng luôn phiên đang mở — không khởi động lại, không nạp lại phiên (Antigravity trước đây mất ~30 giây mỗi lần nhắn tiếp), transcript ghi "tiếp tục (dùng lại tiến trình đang mở)". Tối đa 3 tiến trình chờ cùng lúc (quá thì tắt cái cũ nhất). Lượt lỗi, quá thời gian hoặc bị huỷ thì tiến trình tắt như trước; sửa kết nối (lệnh, env, key, bản agent…) thì lần nhắn tiếp sau mở tiến trình mới; tắt app tắt hết.
+- **Ranh giới cho run ngoài dự án** (chỉ kết nối ACP): run không gắn dự án có cả máy trong tầm với — agent hay tự đi dò cấu hình, log, thư mục cài đặt khi được hỏi điều nó không biết. Nay:
+  - Công cụ đọc có sẵn của Antigravity (xem file, liệt kê thư mục, tìm kiếm) bị ẩn — chúng không bao giờ xin phép và đọc được cả `~/.gemini` (nơi có token đăng nhập). Agent đọc file qua AgentDek, chỉ trong workspace của run; liệt kê / tìm bằng lệnh.
+  - Lệnh đụng tới ngoài workspace phải được bạn cho phép, kể cả nhân sự để *acceptEdits*: chạy ở thư mục khác, đường dẫn tuyệt đối ngoài workspace, `..` thoát ra ngoài, `~`, `%USERPROFILE%` / `%APPDATA%`…, `$env:…`, liệt kê biến môi trường. Đọc / ghi file ngoài workspace (qua AgentDek) cũng vậy. *Luôn cho phép* áp cho phần còn lại của lượt.
+  - Prompt đầu ghi rõ phạm vi: chỉ làm trong workspace, cần thông tin bên ngoài thì hỏi.
+  - Đây là luật dò trên câu lệnh, không phải sandbox: đường dẫn được ghép trong lúc chạy (bên trong `node -e`, nối chuỗi…) không bị phát hiện. Việc cần cô lập thật nên chạy trong dự án (quyền shell / đọc / ghi của dự án).
+  - Run trong dự án và nhân sự Claude / API không đổi.
+
 ## 0.3.7
 **ACP: transcript sạch, đếm được token Antigravity, quyền dự án áp vào công cụ của Antigravity.**
 
