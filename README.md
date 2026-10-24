@@ -2,6 +2,14 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.7
+**ACP: transcript sạch, đếm được token Antigravity, quyền dự án áp vào công cụ của Antigravity.**
+
+- **Bớt dòng "ERROR" giả trong transcript**: Google Antigravity gắn chữ `ERROR: logging before google.Init:` vào mọi dòng log, kể cả log thường (`permissions: skipping check…`, `Installing … webm_encoder`) — trước đây dòng nào cũng hiện thành một dòng trạng thái. Nay AgentDek đọc đúng mức log (I / W / E / F) và chỉ hiện lỗi thật (E / F); lỗi vô hại lặp lại mỗi lượt (`Cannot resolve relative skills directory`) bị bỏ qua. Log của agent khác (vd. Gemini CLI) giữ quy tắc cũ.
+- **Token và chi phí của Antigravity**: AgentDek đọc số token agent ACP trả về sau mỗi lượt (input, output + suy luận, cache read) — Antigravity có báo — nên run ghi token và ≈USD tham khảo theo Bảng giá như Codex. Agent không báo token thì chi phí hiện "—"; trước đây run ghi "$0 (bảng giá)", sai lệch.
+- **Kết quả tool hiện đủ nội dung**: Antigravity gửi kết quả của tool (nội dung file đã đọc…) ở bản cập nhật giữa chừng rồi mới báo xong — transcript trước đây chỉ hiện chữ "completed". Nay nội dung được gom qua mọi bản cập nhật; agent không gửi nội dung thì ghi rõ như vậy.
+- **Quyền dự án ẩn luôn công cụ bị cấm khỏi Antigravity**: run trong dự án gửi bộ lọc công cụ của Antigravity khi mở / nối lại phiên — dự án cấm shell thì agent không thấy `run_command`, dự án tắt mạng thì không thấy tìm web / đọc URL — agent không tốn lượt thử lệnh sẽ bị từ chối. Shell "hỏi" vẫn giữ: mỗi lệnh xin phép qua gate của AgentDek như trước.
+
 ## 0.3.6
 **ACP: chọn được model của agent, bỏ các ô giá không dùng tới.**
 
