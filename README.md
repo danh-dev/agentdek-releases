@@ -2,6 +2,21 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.12
+**Brainstorm có kế hoạch trước: Facilitator đặt mục tiêu, tiêu chí và mẫu kết quả rồi mới giao việc; thêm loại buổi "xây dựng / thiết kế" ra một bản thống nhất; báo cáo dễ hiểu hơn.**
+
+- **Facilitator lập kế hoạch trước khi ai làm gì**: đọc đề bài và tài liệu rồi xác định loại buổi, mục tiêu (một câu), phạm vi (làm gì / không làm gì), giả định, tiêu chí, mẫu kết quả, góc nhìn chia cho từng người và các câu hỏi còn mở (kèm giả định tạm để buổi vẫn chạy). Mọi người tham gia nhận cùng một kế hoạch và góc nhìn riêng của mình; báo cáo cuối viết theo đúng mẫu đó. AgentDek kiểm kế hoạch (thiếu tiêu chí, thiếu mốc điểm, thiếu mẫu…) — sai thì Facilitator lập lại một lần, vẫn sai thì báo lỗi rõ. Kế hoạch xem được ở tab *Kế hoạch* trên trang run ngay khi có, và trong file `plan.md`.
+- **Ba loại buổi**, Facilitator tự xác định hoặc bạn chọn:
+  - *Xây dựng / thiết kế* — cùng làm **một** kết quả (danh sách chức năng, đặc tả, dàn ý, quy trình…), không chấm điểm. Ví dụ "BA thiết kế các chức năng phần mềm quản lý kho": tiêu chí là điều kiểm được (đủ luồng nhập / xuất / kiểm kê, mỗi chức năng có tác nhân và quy tắc nghiệp vụ, không trùng…); mẫu là các nhóm chức năng với Tên · Tác nhân · Mô tả · Đầu vào / đầu ra · Quy tắc · Ưu tiên. Mỗi người viết bản đầy đủ theo mẫu (thiếu mục bắt buộc → được trả lại một lần) → rà chéo bản của nhau (thiếu / sai / trùng / ngoài phạm vi / nên lấy) → (tuỳ chọn) sửa → Facilitator ghép **bản thống nhất** (`deliverable.md`) kèm đối chiếu từng tiêu chí (đạt / một phần / chưa), quyết định ở chỗ các bản khác nhau (chọn gì, của ai, vì sao), ý để sau, câu hỏi cho bạn, việc tiếp. Không có bước chọn phương án.
+  - *Chọn hướng đi* — như trước, nhưng các phương án theo cùng một mẫu và ở vòng 2 người tham gia **chấm chéo** phương án của nhau theo mốc 1 / 3 / 5 của kế hoạch (không ai chấm phương án của mình); AgentDek tính trung bình ± độ lệch, xếp hạng theo đúng điểm hiển thị. Báo cáo trả lời thẳng câu hỏi, nói vì sao chọn, **vì sao hơn phương án xếp thứ hai**, điều kiện, rủi ro và chỗ chưa thống nhất.
+  - *Đánh giá* — như 0.3.11, tiêu chí kèm mốc điểm do Facilitator viết cho đúng đề bài. Không đưa sẵn danh sách thứ cần chấm thì Facilitator lấy từ tài liệu đầu vào.
+- **Duyệt kế hoạch** (tuỳ chọn): khối Brainstorm có *Cho tôi duyệt kế hoạch trước khi bắt đầu*; Giao việc, thẻ đề xuất của Master và task trong kế hoạch cũng bật được. Run dừng ở kế hoạch: *Duyệt* để chạy; *Từ chối* kèm góp ý → Facilitator sửa theo góp ý rồi hỏi lại (tối đa 3 lần); từ chối không góp ý → dừng. Ô duyệt hiển thị kế hoạch dạng bảng (markdown) — áp cho mọi ô duyệt / review của workflow.
+- **Tiêu chí**: để bảng tiêu chí của khối ở mặc định thì Facilitator tự đặt tiêu chí hợp đề bài; sửa bảng thì mọi buổi giữ đúng các tiêu chí đó (Facilitator chỉ viết mốc điểm). Buổi xây dựng không dùng bảng tiêu chí.
+- **Báo cáo** (`decision.md`, trang run, bản tóm tắt gửi Master) bắt đầu bằng câu trả lời / tóm tắt bằng lời thường, kế hoạch ngắn (mục tiêu, tiêu chí), người tham gia kèm góc nhìn; phần lời của Facilitator không dùng mã hay thuật ngữ ở phần kết luận.
+- Workflow "Brainstorm" có sẵn trên máy được cập nhật — chỉ hỏi *Chọn phương án* khi là buổi chọn hướng đi — nếu bạn chưa sửa nó (bản 0.3.10 hoặc 0.3.11); bản cũ lưu trong lịch sử. Hướng dẫn của Brainstorm Facilitator (prompt + skill) được cập nhật tương tự nếu bạn chưa sửa.
+- Tool `brainstorm` của Master: `mode` thêm `build` / `auto` (mặc định: Facilitator tự xác định), `planApproval`; prompt của Master được cập nhật — bản cũ của bạn được lưu thành một phiên bản trước khi thay.
+- Run brainstorm đang chạy dở từ bản trước vẫn chạy tiếp như cũ (không lập kế hoạch lại).
+
 ## 0.3.11
 **Brainstorm chọn đúng người và báo cáo bằng tên thật, chế độ chấm điểm, model hết hạn mức tính theo từng model, quyền web theo việc.**
 
