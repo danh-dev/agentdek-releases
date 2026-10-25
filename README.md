@@ -2,6 +2,20 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.10
+**Khối Brainstorm: nhiều nhân sự khác chuyên môn, khác họ model cùng nghĩ một đề bài, phản biện chéo ẩn danh, Facilitator tổng hợp phương án tối ưu kèm ý kiến phản đối.**
+
+- **Khối mới "Brainstorm"** trong workflow (icon 💡): đề bài (template), người tham gia *Tự chọn* hoặc danh sách cố định (mỗi người chọn được model riêng), model chung cho người tham gia, model của Facilitator, số người tối thiểu / tối đa, *Trộn họ model*, số vòng, số phương án mỗi người, thang điểm (sửa được tiêu chí và trọng số), lượt tối đa mỗi người mỗi vòng, ngân sách cả khối, cho tra web.
+- **Cách chạy:** chọn người → **vòng 1** mỗi người đưa 2 phương án, độc lập, không thấy bài người khác → **vòng 2** mỗi người phản biện phương án của người khác (mạnh / yếu / rủi ro / ghép được với) → **vòng 3** (tuỳ chọn) sửa theo phản biện → **Facilitator tổng hợp**: chấm điểm theo thang, xếp hạng, khuyến nghị kèm điều kiện, *ý kiến phản đối* (giữ nguyên, không làm phẳng), câu hỏi còn mở. Không phương án nào đạt thì Facilitator nói thẳng.
+- **Luật do code kiểm, không phó mặc prompt:** 2–6 người; ít nhất 2 họ model (anthropic / openai / google…), tính theo model thực tế mỗi người chạy; một nhân sự chỉ được tham gia hai lần nếu hai lần khác họ model; không có Master hay Facilitator trong nhóm. Facilitator chọn sai luật → được chọn lại một lần kèm lý do, vẫn sai → khối báo lỗi rõ.
+- **Ẩn danh:** người tham gia mang nhãn ngẫu nhiên A, B, C…; tên nhân sự, model, kết nối bị xoá khỏi văn bản trước khi phát cho người khác và cho Facilitator. Nhãn → người chỉ hiện sau khi tổng hợp xong.
+- **Chỉ đọc:** người tham gia và Facilitator không ghi file, không chạy lệnh, không dùng MCP, không hỏi bạn (câu hỏi được trả lời "tự giả định"). Claude / API: chỉ còn công cụ đọc + tra web; Codex: sandbox chỉ đọc, mọi lệnh / sửa file bị từ chối; Antigravity: ẩn công cụ ghi, chạy lệnh, tạo ảnh. Vì chỉ cần gọi tool nên nhân sự có MCP / skill có script vẫn tham gia được bằng Gemini, Codex… Run gắn dự án đọc thư mục nguồn tại chỗ, không tạo worktree.
+- **Bền bỉ:** một người lỗi thì vòng vẫn đi tiếp nếu còn đủ số tối thiểu (ghi lại ai không xong). Model lỗi giữa chừng → Master / luật dự phòng của 0.3.9 đổi model; đổi xong vẫn kiểm lại luật trộn họ. Chạm ngân sách → bỏ các vòng còn lại, vẫn tổng hợp. Facilitator trả JSON sai → được yêu cầu sửa một lần. App tắt giữa chừng → *Chạy tiếp* giữ các lượt đã xong.
+- **Kết quả:** `outputs.<khối>.summary` (khuyến nghị) và `outputs.<khối>.json` (bảng điểm đầy đủ), file trong `brainstorm/<khối>-<lần>/` (người tham gia, từng vòng, `decision.md`, `decision.json`, nhãn). **Trang run** có khung Brainstorm: người tham gia + model thực tế, bảng điểm (phương án × tiêu chí, điểm trọng số), khuyến nghị, ý kiến phản đối, câu hỏi còn mở, nội dung từng vòng, link tới từng lượt chạy.
+- **Nhân sự "Brainstorm Facilitator"** và **workflow "Brainstorm"** (khối Brainstorm → *Chọn phương án*) được tạo sẵn khi mở app — chỉ tạo khi chưa có, không ghi đè bản bạn đã sửa. Facilitator mặc định dùng Claude Fable nếu kết nối Claude có model này (không thì Opus); không nhận Giao việc thường, không có trong danh bạ nhận việc.
+- **Giao việc** workflow Brainstorm: thêm ô người tham gia (mỗi người một model, để trống = Facilitator tự chọn cả người lẫn model), số vòng, model của Facilitator.
+- **Master** có tool `brainstorm`: tự chọn người và model cho từng người (nêu lý do), số vòng; dùng cho quyết định lớn (chiến dịch, sản phẩm, đầu tư). Chế độ Đề xuất: thẻ hiện đề bài, người tham gia + model, số vòng, số lượt chạy ước tính — **Sửa** trên thẻ để thêm / bớt người, đổi model từng người, đổi số vòng; luật được kiểm lại khi duyệt. Prompt của Master được cập nhật (kèm ghi chú chọn model của 0.3.9 — bản cũ của bạn được lưu thành một phiên bản trước khi thay).
+
 ## 0.3.9
 **Chọn model linh hoạt: khả năng của từng model, model cho từng lần chạy / từng khối, hồ sơ model, Master xử lý khi model lỗi.**
 
