@@ -2,6 +2,15 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.16
+**Bấm «Mở» trên thông báo luôn tới đúng màn hình (cả khi cửa sổ đang ẩn trong khay); Master không còn tự chặn mình khi đổi nguồn / di chuyển / xoá dự án từ phiên chat của dự án đó.**
+
+- **«Mở» trên thông báo** (toast của Windows và thông báo trong app, cùng một quy tắc với Hộp thư): run xong / lỗi / chờ bạn — kể cả run do Master giao — mở **trang run** (có nhãn «Chat» và link về phiên); việc của chính phiên chat (thẻ đề xuất, phiên chờ bạn, phiên lỗi) mở **phiên chat**; «bị gián đoạn» mở *Lịch sử giao việc* lọc sẵn «Gián đoạn»; *Kiểm tra cập nhật* ở khay mở *Cài đặt → Cập nhật*. Trước đây run do Master giao luôn mở phiên chat.
+- Bấm thông báo khi cửa sổ đã đóng xuống khay (hoặc đang tải lại) giờ không còn bị mất: app đợi giao diện sẵn sàng rồi mới chuyển trang. Bấm «Mở» tới đúng màn hình đang mở thì transcript cuộn xuống cuối và viền màn hình nháy nhẹ — luôn thấy là đã bấm.
+- **Master đổi nguồn / quyền của dự án** (`projects.set_source`) từ phiên chat gắn dự án đó không còn bị từ chối «có 1 run của dự án đang chạy/chờ» vì chính phiên chat: phiên chat không dùng workspace nên không bao giờ tính là run đang chạy. Cùng quy tắc cho *Di chuyển kho dự án* và *Xoá dự án*. Khi còn run thật đang chạy, lời từ chối kể tên tối đa 3 run (mã + tiêu đề) để biết cần huỷ hay đợi run nào.
+- **Xoá dự án** (Master hay trang Dự án): các phiên chat gắn dự án không chặn việc xoá nữa — thẻ xoá ghi «N phiên chat sẽ được gỡ khỏi dự án»; khi xoá, các phiên đó thành phiên chung (transcript giữ nguyên, có một dòng hệ thống ghi lại). Phiên đang gắn chính dự án đó vẫn không xoá được dự án từ bên trong.
+- **Brainstorm: số người tham gia tối đa thành cài đặt** (*Cài đặt → Brainstorm*, 2–10, mặc định 6; Master đổi được bằng `settings.set brainstorm.maxParticipants`). Sửa lỗi brainstorm 6 người do Master chọn hỏng sau khi đã lập và duyệt kế hoạch («tối đa 5 người (có 6)»): nhóm cố định giờ chỉ bị giới hạn bởi cài đặt (không theo *Số người tối đa* của khối), dài hơn thì giữ những người đầu và ghi «bỏ N người vì vượt trần M»; nhóm của Master được kiểm ngay khi đề xuất và khi duyệt, trước khi Facilitator chạy lượt nào. Thẻ đề xuất, Giao việc và khối Brainstorm hiện trần hiện tại; prompt của Master được cập nhật (bản cũ lưu thành một phiên bản).
+
 ## 0.3.15
 **Lịch sử & Chi phí: chi phí theo model AI và theo đúng ngày tiêu, tách tiền quy đổi với tiền thực trả, ngân sách tháng toàn tổ chức; Lịch sử phân trang, lọc được và có cả phiên chat.**
 
