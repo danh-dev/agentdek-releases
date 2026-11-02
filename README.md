@@ -2,6 +2,12 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.22
+**Bản sửa lỗi: chi phí của phiên chat với Master và của run «Nhắn tiếp» / «Chạy tiếp» dùng kết nối Claude Agent SDK không còn bị tính gấp nhiều lần — app tự sửa lại lịch sử chi phí khi mở.**
+
+- **Sửa lỗi chi phí bị cộng dồn với kết nối Claude Agent SDK** (kể cả đăng nhập OAuth / gói thuê bao; kết nối ACP cũng vậy): sau mỗi lượt, SDK báo chi phí là *tổng của cả phiên tính tới lúc đó*, nhưng các bản trước cộng con số tổng này như thể là chi phí của riêng lượt — phiên chat với Master, mỗi lần **Nhắn tiếp** / **Chạy tiếp** bị tính lặp (lượt 2 tính hai lần, lượt 3 ba lần…): một phiên Master 400 lượt ghi ≈$19 967 trong khi thật ra ≈$103,57, hạn mức phiên và ngân sách dự án bị chạm «giả». Nay mỗi lượt chỉ tính **phần tăng thêm** so với lượt trước.
+- **Lần đầu mở bản này, app tự sửa lịch sử** (chạy nền, vài giây; lượt nối tiếp một phiên cũ đợi việc sửa xong mới chạy): các phiên bị cộng dồn sai được tính lại đúng, trang **Chi phí** (cả phần chia theo ngày / model), hạn mức phiên chat và ngân sách dự án **giảm về đúng**; khi có phiên được sửa, app hiện thông báo «Đã sửa chi phí của N phiên bị cộng dồn sai (−$X)». Run không chắc chắn mắc lỗi này thì giữ nguyên số cũ. Nhập bản sao lưu cũ hoặc bấm **Xây lại chỉ mục chi phí** (Cài đặt → Chi phí & ngân sách) cũng sửa các run đó.
+
 ## 0.3.21
 **Cài plugin và skill không còn qua «gói»: ba cửa rõ ràng — web của AgentDek (đã ký số, kiểm trước khi giải nén), file zip bạn chọn, hoặc thư mục trên máy; có «Tạo plugin mới» để tự viết plugin đầu tiên trong một phút, danh sách bản mới từ web, và mỗi plugin / skill tự mang nguồn của nó.**
 
