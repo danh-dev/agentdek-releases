@@ -2,6 +2,20 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.23
+**Kế hoạch bị gián đoạn khi tắt app giờ «Chạy tiếp» được đúng chỗ dừng: task nối lại chính run cũ (cùng nhánh, cùng phiên làm việc) thay vì chạy lại từ đầu, và run được chạy tiếp ở bất cứ đâu cũng cập nhật lại thẻ task — không còn thẻ «gián đoạn» mồ côi hay kế hoạch «đã huỷ» oan.**
+
+- **Trạng thái mới «Gián đoạn» cho kế hoạch**: tắt app (hoặc app thoát đột ngột) khi kế hoạch đang chạy → lần mở sau kế hoạch hiện **gián đoạn**, không còn bị ghi là «đã huỷ». «Đã huỷ» chỉ còn khi bạn (hoặc Master) bấm Huỷ. Hộp thư có dòng «kế hoạch bị gián đoạn — Chạy tiếp».
+- **Chạy tiếp nối lại đúng run cũ**: bấm Chạy tiếp kế hoạch (hoặc Chạy tiếp một task), task bị gián đoạn tiếp tục **chính run đó** trong cùng thư mục / nhánh, model đọc lại phiên cũ — không làm lại từ đầu, không mất phần việc dở. Nếu run cũ không nối tiếp được (kết nối đã xoá, nhân sự đã đổi…), AgentDek chạy lại bằng run mới và ghi rõ lý do trên thẻ; run mới vẫn thuộc task đó, run cũ vẫn nằm trong lịch sử của task.
+- **Run chạy tiếp ngoài kế hoạch cập nhật thẻ**: chạy tiếp / nhắn tiếp một run của kế hoạch từ Lịch sử, Hộp thư hay trang run → thẻ task tự chuyển «đang chạy» rồi «xong» / «lỗi», kế hoạch tự thành «xong» khi mọi task đã xong. Huỷ run đó → task về To do (ghi «run đã bị huỷ»), không bị tự chạy lại.
+- **Tự dọn thẻ mồ côi của các bản trước** (một lần khi mở bản này): task vẫn «gián đoạn» dù run của nó đã chạy tiếp xong được chuyển sang «xong» kèm bàn giao (hoặc «lỗi» nếu run lỗi); kế hoạch bị ghi «đã huỷ» vì tắt app được tính lại theo các task. Task bạn đã chủ ý kéo về To do không bị đụng.
+- **Master thêm task vào kế hoạch đang chạy** (`add_task`): việc phụ trợ như merge nhánh, sửa lỗi, kiểm thử được thêm thẳng vào kế hoạch đang chạy (chạy ngay khi việc trước xong) thay vì tạo nhiều kế hoạch một task. Theo chế độ phiên như sửa task: Tự động làm luôn với kế hoạch của phiên, kế hoạch của bạn thì thành thẻ Đề xuất để duyệt. Master cũng được dặn dùng Chạy tiếp cho kế hoạch gián đoạn thay vì làm lại.
+- **Tab «Công việc»** thay «Kanban» trong mỗi dự án: một chỗ cho mọi việc — task kế hoạch và việc giao trực tiếp (Giao việc, Chat, workflow, trigger). Mỗi thẻ là một việc; run là lịch sử của việc (nút «k run», «run thứ k», «↻ chạy tiếp ×n»); đầu tab ghi «M việc · N run».
+- Hai kiểu xem **Kanban | Bảng** (app nhớ lựa chọn): Kanban năm cột Backlog · Chờ · Đang chạy · **Cần xử lý** · Xong; Bảng sắp xếp theo cột, ▸ mở lịch sử run ngay dưới hàng. Lọc theo kế hoạch, trạng thái, nguồn, người nhận, tìm không dấu.
+- **Cần xử lý** tách rõ ba lý do, mỗi lý do một nút: chờ bạn → **Trả lời**, gián đoạn khi app tắt → **Chạy tiếp** (nối lại đúng run cũ, cùng worktree), lỗi → **Chạy lại** (task kế hoạch) / **Giao lại** (việc giao trực tiếp).
+- Kế hoạch có trạng thái mới **gián đoạn** (vàng) với nút **Chạy tiếp kế hoạch**; **Thêm task** vào kế hoạch đang chạy ngay trên tab Công việc. Thẻ task cập nhật đúng dù chạy tiếp từ đâu (sửa lỗi thẻ «gián đoạn» mãi sau khi run đã xong).
+- Hộp thư → Cần chú ý: «Kế hoạch «…» bị gián đoạn» (Chạy tiếp / Mở) và «Dự án X: k việc cần xử lý». Bảng phải của Chat: mục «Công việc» với số việc cần xử lý. Ctrl+K: «Công việc — <dự án>».
+
 ## 0.3.22
 **Bản sửa lỗi: chi phí của phiên chat với Master và của run «Nhắn tiếp» / «Chạy tiếp» dùng kết nối Claude Agent SDK không còn bị tính gấp nhiều lần — app tự sửa lại lịch sử chi phí khi mở.**
 
