@@ -2,6 +2,15 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.24
+**Plugin viết bằng Node.js giờ mang được thư viện npm của riêng nó — AgentDek tự cài đúng các gói đã khoá trong `package-lock.json`, an toàn và không đụng tới máy — và plugin cần trình duyệt dùng chung Chromium của bộ công cụ thay vì tự tải.**
+
+- **Plugin Node cài phụ thuộc khoá chặt**: plugin khai `runtime.node.lock: "package-lock.json"` thì lúc cài AgentDek chạy `npm ci` bằng Node / npm của bộ công cụ (tự cài Node nếu máy chưa có), **không bao giờ chạy script cài của gói** (`--ignore-scripts`), không đọc `.npmrc` / biến `npm_config_*` của máy, cài vào thư mục riêng trong bộ công cụ (`nodemods/`) — thư mục plugin vẫn bất biến. Gói được giữ trong bộ nhớ đệm: cài lại, bản mới hay plugin khác cùng thư viện không tải lại. Mỗi plugin có bản gói riêng; plugin cùng `package-lock.json` được chép từ bản đã cài (sau khi kiểm nội dung còn nguyên), gỡ một plugin không ảnh hưởng plugin kia. Gỡ plugin thì thư mục gói của nó được dọn.
+- **Màn xác nhận có mục «Gói Node (npm)»**: số gói và tên từ `package-lock.json`, dung lượng ước tính; gói có script cài (sẽ bị bỏ qua) tô **đỏ**; gói cần build native (node-gyp, prebuild-install…) hoặc lấy từ git / thư mục → **không cài được** kèm lý do; gói tải từ máy chủ khác registry.npmjs.org → không cài được; `package.json` có thư viện mà thiếu lock → báo lỗi ngay. Sau khi cài, AgentDek đối chiếu gói thật với lock: gói có script cài hay phần native mà lock không khai thì hiện cảnh báo.
+- **Plugin cần trình duyệt dùng Chromium của bộ công cụ**: lệnh khai `tools: ["playwright"]` (hoặc `runtime.tools.playwright`) nhận đường dẫn Chromium của bộ công cụ (Playwright 1.64.1) — không tải trình duyệt riêng. Thiếu thì «Kiểm tra môi trường» và tiền kiểm run báo «thiếu Chromium (Playwright)» với nút cài như thiếu FFmpeg; lúc cài plugin, AgentDek tự cài Playwright + Chromium cùng lượt. Plugin dùng `playwright-core` quá cũ so với bản của bộ công cụ (cũ hơn 4 bản phụ hoặc khác bản chính) bị từ chối lúc xem.
+- **«Kiểm tra môi trường» sâu kiểm cả gói Node**: thiếu / bị sửa nội dung / không khớp lock → «gói Node hỏng — Cài lại». Lệnh plugin — viết kiểu `require` hay `import` (ESM), kể cả tiến trình Node con nó tự mở — không thể bị một thư mục `node_modules` lạ trên máy (ví dụ trong thư mục người dùng) chen vào thay gói đã khoá.
+- **«Tạo plugin mới» bản Node** sinh sẵn `package.json` + `package-lock.json` rỗng hợp lệ (cài ngay không cần mạng) và README hướng dẫn thêm thư viện bằng `npm install --package-lock-only`.
+
 ## 0.3.23
 **Kế hoạch bị gián đoạn khi tắt app giờ «Chạy tiếp» được đúng chỗ dừng: task nối lại chính run cũ (cùng nhánh, cùng phiên làm việc) thay vì chạy lại từ đầu, và run được chạy tiếp ở bất cứ đâu cũng cập nhật lại thẻ task — không còn thẻ «gián đoạn» mồ côi hay kế hoạch «đã huỷ» oan.**
 
