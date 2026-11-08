@@ -2,6 +2,10 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.26
+- **Khoá dịch vụ nhiều giá trị** (vd. 5 nhà cung cấp tìm kiếm của plugin `web-research`, mỗi nhà một danh sách khoá): khối «Khoá dịch vụ» ở tab Thông tin giờ tự mở khi plugin chưa có khoá nào hoặc thiếu khoá khuyến nghị, nhãn tóm tắt ghi từng nhà và số khoá («Exa 3 · Serper 1 · 3 chưa nhập»). Mỗi biến nhiều khoá hiện «3 khoá · …a1b2 …c3d4 …e5f6»; nút **Quản lý khoá** cho xem danh sách (chỉ 4 ký tự cuối), **thêm** một hoặc nhiều khoá cùng lúc (dán cách nhau dấu phẩy hoặc xuống dòng, khoá trùng tự bỏ) và **xoá từng khoá** — không phải gõ lại cả chuỗi. Giá trị khoá vẫn không bao giờ hiện lại; Master vẫn không đọc / ghi được khoá.
+- Tác giả plugin: `env[].multi: true` đánh dấu biến chứa nhiều khoá (biến có tên kết thúc `_KEYS` được coi là nhiều khoá sẵn).
+
 ## 0.3.25
 **Plugin giờ luôn chạy trên bộ công cụ của AgentDek (Node, Python, uv, FFmpeg, Playwright + Chromium) — không còn bị bản cài sẵn trên máy làm lệch; cài plugin `shots` trên máy có thư mục Playwright cũ của dự án khác không còn báo «thiếu Playwright» sau khi đã cài xong.**
 
