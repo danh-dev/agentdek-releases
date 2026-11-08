@@ -2,6 +2,10 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.27
+- **Bảng khoá kiểu danh sách** ở trang plugin (tab Thông tin → Khoá dịch vụ, và tab khoá của plugin như `web-research`): mỗi nhà cung cấp một bảng, mỗi dòng một khoá — khoá che (4 ký tự cuối), **đã dùng bao nhiêu** (số lần · chi phí · lần cuối), **trạng thái** (còn dùng được / hết hạn mức / khoá lỗi / đang nghỉ) và nút xoá; dòng cuối «+ Thêm» để dán một hoặc nhiều khoá (cách nhau dấu phẩy), Enter là thêm. Nút **Làm mới** cập nhật trạng thái. Giá trị khoá vẫn không bao giờ hiện lại; Master không đọc được khoá lẫn trạng thái khoá.
+- Tác giả plugin: khối `{type: "keys"}` cho tab khai báo (app tự vẽ bảng) và `keysStatus: {command}` để báo trạng thái từng khoá.
+
 ## 0.3.26
 - **Khoá dịch vụ nhiều giá trị** (vd. 5 nhà cung cấp tìm kiếm của plugin `web-research`, mỗi nhà một danh sách khoá): khối «Khoá dịch vụ» ở tab Thông tin giờ tự mở khi plugin chưa có khoá nào hoặc thiếu khoá khuyến nghị, nhãn tóm tắt ghi từng nhà và số khoá («Exa 3 · Serper 1 · 3 chưa nhập»). Mỗi biến nhiều khoá hiện «3 khoá · …a1b2 …c3d4 …e5f6»; nút **Quản lý khoá** cho xem danh sách (chỉ 4 ký tự cuối), **thêm** một hoặc nhiều khoá cùng lúc (dán cách nhau dấu phẩy hoặc xuống dòng, khoá trùng tự bỏ) và **xoá từng khoá** — không phải gõ lại cả chuỗi. Giá trị khoá vẫn không bao giờ hiện lại; Master vẫn không đọc / ghi được khoá.
 - Tác giả plugin: `env[].multi: true` đánh dấu biến chứa nhiều khoá (biến có tên kết thúc `_KEYS` được coi là nhiều khoá sẵn).
