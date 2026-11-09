@@ -2,6 +2,10 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.28
+- Nhân sự chạy qua Codex trên Windows gọi được plugin từ dòng lệnh — launcher dùng Node của bộ công cụ.
+- Cổng chờ của run (Cho phép / Duyệt / Trả lời): nút tắt ngay từ cú bấm đầu ở mọi màn, bấm trùng không còn báo lỗi đỏ.
+
 ## 0.3.27
 - **Bảng khoá kiểu danh sách** ở trang plugin (tab Thông tin → Khoá dịch vụ, và tab khoá của plugin như `web-research`): mỗi nhà cung cấp một bảng, mỗi dòng một khoá — khoá che (4 ký tự cuối), **đã dùng bao nhiêu** (số lần · chi phí · lần cuối), **trạng thái** (còn dùng được / hết hạn mức / khoá lỗi / đang nghỉ) và nút xoá; dòng cuối «+ Thêm» để dán một hoặc nhiều khoá (cách nhau dấu phẩy), Enter là thêm. Nút **Làm mới** cập nhật trạng thái. Giá trị khoá vẫn không bao giờ hiện lại; Master không đọc được khoá lẫn trạng thái khoá.
 - Tác giả plugin: khối `{type: "keys"}` cho tab khai báo (app tự vẽ bảng) và `keysStatus: {command}` để báo trạng thái từng khoá.
