@@ -2,6 +2,11 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.29
+- **Lệnh «chỉ từ trang» của plugin**: plugin có thể đánh dấu lệnh chỉ chạy được từ trang của nó (vd tải model vài GB, cài engine, chạy bộ đề tốn tiền) — nhân sự gọi qua tool và Master không thấy, không gọi được; màn xác nhận cài và tab Thông tin ghi nhãn «chỉ từ trang». Đây là rào chống nhầm, không phải hộp cát: nhân sự có quyền shell vẫn chạy được mã của plugin.
+- **Bảo mật plugin (review S28)**: runner từ chối đường dẫn mạng / thiết bị (`\\máy\…`, `//máy/…`, `\\?\`) và ký tự `:` lạ **trước** khi chạm ổ đĩa (trên Windows, chạm vào đường dẫn mạng có thể làm lộ thông tin đăng nhập); khoá trong biến nhiều khoá (`*_API_KEYS`) được che **từng khoá** trong log, kết quả lệnh và tóm tắt run.
+- Tác giả plugin: `commands.<lệnh>.scope: "page"` (zip tự đặt `minApp ≥ 0.3.29`); Master đọc danh sách lệnh trang ở trường `pageCommands` của `plugins.list`.
+
 ## 0.3.28
 - Nhân sự chạy qua Codex trên Windows gọi được plugin từ dòng lệnh — launcher dùng Node của bộ công cụ.
 - Cổng chờ của run (Cho phép / Duyệt / Trả lời): nút tắt ngay từ cú bấm đầu ở mọi màn, bấm trùng không còn báo lỗi đỏ.
