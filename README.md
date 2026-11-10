@@ -2,6 +2,14 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.30
+- **Mọi công cụ đi qua AgentDek**: nhân sự trên Codex, Antigravity / ACP, Claude và kết nối API gọi plugin bằng cùng bộ tool của AgentDek (`list_plugins`, `run_plugin_command`, `code_graph`, `tool_result_read`) thay vì chạy lệnh `agentdek-plugin` trong shell. Sửa tận gốc lỗi «Access is denied» khi nhân sự Codex trên Windows gọi plugin: Codex tự khởi động cầu nối ngoài sandbox lệnh, không còn gì chạy từ shell bị hạn chế.
+- **Khoá dịch vụ không còn nằm trong shell của nhân sự**: khoá plugin chỉ có trong tiến trình plugin do AgentDek chạy. Env của mọi nhân sự cũng được gỡ các khoá đăng nhập lạ trong máy (`GH_TOKEN`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`…) để một key trong máy không âm thầm chuyển kết nối gói sang tính tiền theo token — cần key cho kết nối thì đặt trong Kết nối AI (app báo vàng một lần mỗi run khi phát hiện biến như vậy trong máy).
+- **Mọi plugin đã cài dùng được cho mọi nhân sự** khi cần, không phải ghim skill; brief chỉ còn tên + một dòng mỗi plugin, chi tiết lệnh lấy qua `list_plugins({id})`. Giới hạn theo nhân sự là tuỳ chọn (Nhân sự → Kỹ năng → «Plugin nhân sự này được dùng»). Plugin thiếu khoá báo rõ «nhập ở trang Plugin». Ở chế độ shell chỉ plugin của skill ghim mới vào shell như trước.
+- Kết nối AI (Claude / Codex / ACP) có lựa chọn «Nhân sự gọi plugin qua»: Tool của AgentDek (mặc định) · Lệnh shell · Cả hai. Kết quả công cụ rất dài được chia trang thay vì làm tràn ngữ cảnh; lỗi công cụ nói rõ lệnh *chưa chạy* / *có thể đã chạy* / *kiểm trước khi lặp*. Thẻ duyệt của cầu nối xếp hàng sau thẻ đang chờ, không đè nhau.
+- Sửa lỗi có sẵn: lưu hồ sơ nhân sự không còn làm mất danh sách skill đã ghim.
+- Tác giả plugin: dòng JSON kết quả giữ ≤ 8 KB, kết quả lớn ghi ra file và trả đường dẫn (HANDBOOK §4.5); skill giữ nguyên dòng `agentdek-plugin …` — AgentDek tự dịch thành lời gọi tool. Kiểm trên Windows: `scripts/dev/win-bridge-check.md`.
+
 ## 0.3.29
 - **Lệnh «chỉ từ trang» của plugin**: plugin có thể đánh dấu lệnh chỉ chạy được từ trang của nó (vd tải model vài GB, cài engine, chạy bộ đề tốn tiền) — nhân sự gọi qua tool và Master không thấy, không gọi được; màn xác nhận cài và tab Thông tin ghi nhãn «chỉ từ trang». Đây là rào chống nhầm, không phải hộp cát: nhân sự có quyền shell vẫn chạy được mã của plugin.
 - **Bảo mật plugin (review S28)**: runner từ chối đường dẫn mạng / thiết bị (`\\máy\…`, `//máy/…`, `\\?\`) và ký tự `:` lạ **trước** khi chạm ổ đĩa (trên Windows, chạm vào đường dẫn mạng có thể làm lộ thông tin đăng nhập); khoá trong biến nhiều khoá (`*_API_KEYS`) được che **từng khoá** trong log, kết quả lệnh và tóm tắt run.
