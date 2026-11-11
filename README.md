@@ -2,6 +2,17 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.33
+- **Mọi agent nói ACP đều thành kết nối AI**: Kết nối AI → «Agent ACP tuỳ chỉnh» → dán cả dòng lệnh (vd `gemini --acp`, `opencode acp`, `cursor-agent acp`, `npx -y …`). Có sẵn gợi ý cho Gemini, OpenCode, Cursor, Qwen, Kimi, Droid, Copilot, Cline (cái nào ghi «preset chưa kiểm» là chưa thử trên máy thật). Đăng nhập CLI trong terminal như CLI đó hướng dẫn; AgentDek dùng lại đăng nhập ấy.
+- **Kiểm tra kết nối nhanh, không tốn hạn mức**: chỉ bắt tay với agent — hiện phiên bản, năng lực, cách đăng nhập; từ chối lệnh không phải CLI của agent (vd dán nhầm một lệnh tải script). **Phát hiện lại** đọc danh sách model agent tự quảng bá, luôn có «Mặc định của agent»; mất mạng thì giữ danh sách cũ và ghi «chưa xác nhận».
+- **Windows**: agent cài bằng npm không còn chạy qua cmd.exe — AgentDek chạy thẳng file của agent, Huỷ dừng sạch cả cây tiến trình.
+- **Lượt im lặng**: agent ACP không báo gì sau 60 giây → một dòng nhắc; sau 15 phút → dừng lượt treo (chỉnh được trong Cài đặt và trên từng kết nối).
+- **Bộ chọn model mới**: kết nối chia ba nhóm **Gói · API · Local**, chấm cảnh báo (thiếu CLI, cần đăng nhập, có bản mới, danh sách model chưa xác nhận), kết nối không dùng được hiện mờ kèm lý do. «Thử trả lời» gửi một câu «OK» để chắc kết nối thật sự trả lời — kết quả dùng để xếp kết nối nên dùng trước. Model đã ghim mà kết nối chưa sẵn sàng → đưa về Thiết lập, không tự đổi sang kết nối khác.
+- **Model theo run**: chỉ lưu khi bạn chọn; đổi model của nhân sự thì các run đang theo nhân sự đổi theo, run có model riêng được hỏi «Chuyển cả những run này».
+- Antigravity chạy trên runtime ACP chung (không đổi gì với bạn); cập nhật Antigravity chỉ chuyển sang bản mới khi bản mới khởi động được.
+- Kết nối «chưa đăng nhập» theo lần kiểm trước chỉ bị **cảnh báo và hiện mờ**, không bị chặn — run vẫn chạy và tự báo lỗi nếu thật sự chưa đăng nhập; run trợ giúp ảnh cũng thử kết nối đó sau các kết nối sạch. CLI giả lập «(kiểm thử)» có trong preset, nhóm Local, để thử tính năng khi máy chưa có CLI ACP nào.
+- **Sửa**: Antigravity không được dùng làm run trợ giúp ảnh khi nhân sự cha khai năng lực Antigravity không có (vd đọc ảnh) hoặc sau một lần kiểm «Tạo ảnh» hỏng; từ nay mỗi kết nối gói không được dùng đều có lý do riêng trong «đã bỏ qua».
+
 ## 0.3.32
 - **Xem ảnh ngay trong app**: ảnh do `generate_image` tạo hiện thành thumbnail trong khối «Ảnh» của trang run và ngay dưới lời gọi tool trong transcript; bấm mở to (←/→, phóng, tải, «Mở thư mục») thay vì chỉ thấy đường dẫn. Ảnh nằm trong thư mục dự án cũng xem được (route file của run đọc thêm thư mục dự án, chỉ ảnh, chỉ đọc).
 - Sửa nóng cho 0.3.31: **run trợ giúp tạo ảnh** (nhân sự Claude mượn Codex/Antigravity) đã tạo ảnh nhưng lưu vào thư mục làm việc riêng của run con, nên run cha báo «không lưu ảnh nào». Nay brief ghi đường dẫn tuyệt đối của thư mục đích và app tìm ảnh ở mọi thư mục run con có thể đã ghi (workspace của nó, thư mục dự án dùng chung, workspace của run cha) rồi chép về `images/` của run cha.
