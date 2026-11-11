@@ -2,6 +2,16 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.35
+- **Claude Code qua gateway hoặc server trên máy**: kết nối Claude kiểu «Endpoint tuỳ chỉnh» — dán URL + token (LiteLLM, OpenRouter, Ollama có /v1/messages…), chọn model cho từng bậc Opus/Sonnet/Haiku (bậc trống = model của run). Mỗi kết nối có thư mục riêng nên đăng nhập Claude trên máy không bị đụng; token chỉ hiện «đã lưu».
+- **Codex qua endpoint riêng**: Codex chạy với base URL + khoá của bạn thay cho đăng nhập ChatGPT (Responses API, tuỳ chọn Chat). Khoá chỉ tới đúng tiến trình Codex của kết nối đó, không lọt sang engine khác.
+- **Quét server trên máy**: một nút tìm Ollama, LM Studio, oMLX, EXO, vLLM, LiteLLM đang chạy trên máy (chỉ 127.0.0.1, 6 cổng quen) và mở form điền sẵn — không tự tạo gì; nhập tay host:port cho máy trong LAN.
+- **Dò model của endpoint**: lấy danh sách model kèm ngữ cảnh, hỗ trợ tool, đọc ảnh (Ollama, LM Studio, OpenRouter, Gemini…); trần 2 MiB / 1 000 model (OpenRouter 8 MiB); model bạn đã chọn không bao giờ bị ghi đè; OpenRouter chưa nạp tiền → gợi ý model `:free` có tool. Kiểm tra khả năng có thêm «đọc ảnh» và «gọi tool».
+- **Không chặn, chỉ báo**: model chưa thử có nhãn «chưa kiểm» nhưng vẫn chọn được; HTTP ngoài máy cần bạn tích đồng ý rồi chạy bình thường kèm chấm vàng; URL chứa mật khẩu hay tham số bị từ chối khi lưu để khoá không nằm trong cấu hình.
+- **Nhóm kết nối**: endpoint trên máy/LAN vào nhóm Local, gateway vào nhóm API (không tính là gói, không đọc hạn mức gói, không tính là xoay tài khoản).
+- Kết nối cũ không đổi gì: OpenRouter, DeepSeek, Ollama theo preset giữ nguyên nhóm, khoá đăng nhập và kết quả «Thử trả lời»; kết nối Claude đã trỏ gateway từ trước vẫn gửi header x-api-key như cũ. Chỉ kết nối trỏ URL tuỳ chỉnh không theo preset cần bấm lại «Thử trả lời» một lần sau khi nâng cấp.
+- **Sửa**: thẻ «Claude/Codex — tài khoản khác» (0.3.34) bị ẩn khỏi bộ chọn khi server có preset mới; «Kiểm tra kết nối» giờ kèm gợi ý và mã lỗi (401 khoá bị từ chối, 402 hết credit) cho mọi loại kết nối.
+
 ## 0.3.34
 - **Thấy hạn mức gói trước khi đụng trần**: Kết nối AI hiện % đã dùng và giờ reset của cửa sổ 5 giờ / tuần (/ theo model) cho Claude và Codex, lấy từ chính CLI đã đăng nhập. Đường đọc này không chính thức — tắt được trên từng kết nối («Đọc hạn mức của gói», mặc định bật); hỏng chỉ mất số liệu, run không bị ảnh hưởng. Agent khác (Antigravity, Gemini, OpenCode Zen…) ghi rõ «không có nguồn». Kết nối Claude kiểu `setup-token` thường không đọc được số — có nút chuyển sang «Claude Code (thư mục)».
 - **Nhân sự và Master biết hạn mức**: tool chỉ-đọc `usage_limits`; khi gói đã dùng quá 90 % (chỉnh được theo kết nối) brief nhắc nhân sự làm gọn.
