@@ -2,6 +2,10 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.32
+- **Xem ảnh ngay trong app**: ảnh do `generate_image` tạo hiện thành thumbnail trong khối «Ảnh» của trang run và ngay dưới lời gọi tool trong transcript; bấm mở to (←/→, phóng, tải, «Mở thư mục») thay vì chỉ thấy đường dẫn. Ảnh nằm trong thư mục dự án cũng xem được (route file của run đọc thêm thư mục dự án, chỉ ảnh, chỉ đọc).
+- Sửa nóng cho 0.3.31: **run trợ giúp tạo ảnh** (nhân sự Claude mượn Codex/Antigravity) đã tạo ảnh nhưng lưu vào thư mục làm việc riêng của run con, nên run cha báo «không lưu ảnh nào». Nay brief ghi đường dẫn tuyệt đối của thư mục đích và app tìm ảnh ở mọi thư mục run con có thể đã ghi (workspace của nó, thư mục dự án dùng chung, workspace của run cha) rồi chép về `images/` của run cha.
+
 ## 0.3.31
 - **Tạo ảnh: một tool, app chọn nguồn.** Nhân sự gọi `generate_image(prompt, size, count, refs, quality, kind)`; AgentDek chọn theo thứ tự ưu tiên **skill > nhân sự > dự án > tổ chức** trong ba nguồn: công cụ ảnh của chính gói trong phiên (Codex / Antigravity) → **run trợ giúp** ngắn trên một kết nối gói khác (nhân sự Claude mượn Codex/Antigravity để tạo ảnh, chi phí ghi «gói») → plugin ảnh đã cài (`image-gen`…). Chỉ sang nguồn kế khi nguồn trước chắc chắn chưa chạy (thiếu khoá, không có kết nối, mã thoát 3/6, 429); hết giờ hay lỗi giữa chừng thì dừng; ảnh bị kiểm duyệt không bao giờ gửi sang nguồn khác. Mỗi lần tạo ảnh ghi «ảnh tạo bằng …, vì …» vào run (khối «Ảnh» trên trang run).
 - Cài đặt → **Năng lực**: thứ tự nguồn mặc định của tổ chức, trần ảnh mỗi lượt (4) và mỗi ngày (50, hiện «hôm nay đã dùng»), «chỉ khi có người» (run do trigger không dùng run trợ giúp / plugin), thời gian chờ run trợ giúp, thứ tự plugin ảnh — tất cả chỉnh/tắt được. Kết nối AI (Codex / ACP) có khối «Tạo ảnh trong phiên» (kích thước, số ảnh tham chiếu). Nhân sự và Dự án có khối «Nguồn tạo ảnh» kèm dòng «Thứ tự hiệu lực». Các luật này chỉ điều hướng `generate_image`; gọi thẳng plugin vẫn là quyền của nhân sự.
