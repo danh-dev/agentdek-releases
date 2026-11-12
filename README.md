@@ -2,6 +2,20 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.41
+- **Đăng nhập bằng Firefox của AgentDek** (đường D cho khoá lấy bằng đăng nhập): khi trang đăng nhập chặn cửa sổ nhúng (Google «trình duyệt này có thể không an toàn»), bấm **«Đăng nhập bằng Firefox của AgentDek»** — app mở một Firefox riêng, profile riêng cho từng tài khoản, bạn đăng nhập như bình thường; AgentDek chỉ đọc đúng các cookie plugin đã khai và báo «Đã lấy được ✓». Không WebDriver, không điều khiển tự động, không đụng Firefox của bạn. Thanh trạng thái trong app có **«Đã đăng nhập xong» / «Huỷ»**; hết 15 phút hoặc Huỷ → đóng nhẹ, 10 giây sau mới buộc dừng. «Lấy lại» mở lại đúng profile; «Quên phiên» xoá profile. Cửa sổ nhúng bị Google chặn → hiện ngay nút chuyển sang Firefox.
+- **Firefox cho đăng nhập** trong Cài đặt → Môi trường → «Cho plugin» (cạnh Chromium): chưa có gì được tải sẵn; bấm **Tải** (~100 MB, bản chính thức từ archive.mozilla.org, phiên bản mới nhất theo product-details) — có tiến độ, Huỷ, tải tiếp khi đứt mạng, **Gỡ**; gói được đối chiếu **SHA512SUMS** trước khi cài, sai → xoá và báo lỗi (chữ ký GPG chưa kiểm — ghi rõ trên thẻ). Giải nén vào thư mục bộ công cụ, không cần quyền admin, không ghi registry; `policies.json`: chặn extension, không lưu mật khẩu, tắt telemetry/studies/Pocket, giữ tự cập nhật. Cũ hơn 1 bản lớn → nhắc cập nhật; hơn 2 bản → phải cập nhật trước khi đăng nhập. Không cập nhật/gỡ khi Firefox này đang mở.
+- Plugin khai `capture.browser: "firefox"` để nút chính là đường D («Đăng nhập trong app» vẫn ở «Cách khác»); cần `minApp ≥ 0.3.41` — app từ chối cài plugin khai thiếu, `items-publish pack` tự nâng.
+- Bảo mật: không có route/API nào mở Firefox này — chỉ người dùng bấm trong cửa sổ desktop; chỉ đọc bảng cookie theo host + tên đã khai; profile nằm trong `data/` của app.
+
+## 0.3.40
+- **Trần chi tiêu của chat tính theo tiền thật trả**: run trên gói thuê bao và endpoint local tính 0 $; «Đã dùng» trong chat, side panel và thông báo chạm trần nay hiện **«$… (thực trả)»** thay vì «≈$» quy đổi. Run dùng lẫn kết nối gói và trả phí (hoặc plugin trả phí) chỉ đếm phần trả thật — không còn chạm trần sớm vì giá quy đổi, cũng không lách được trần.
+- **Bảng giá**: gỡ nốt 3 dòng seed cũ `gpt-6*` (Astra/Sol/Luna) còn sót trong `org/pricing.yaml` của bản cài ≤ 0.3.38 — các model GPT-6 lấy giá tự động như những model khác.
+- **Kết nối AI**: thống nhất chữ **«Phát hiện model»** ở mọi hướng dẫn, gợi ý kiểm tra và lý do đăng nhập (không còn «Dò model» / «Phát hiện lại»). Gợi ý đã lưu từ lần kiểm tra trước đổi chữ sau lần kiểm tra kế tiếp.
+- **Kết nối ứng dụng**: danh mục gợi ý thêm **treg.to** (cổng nhiều API trả theo lượt, chưa kiểm chứng) — mục danh mục nay có thể điền sẵn tên header và scheme (Bearer) cho kiểu xác thực header; `call` / `call_media` xếp loại **thanh toán** nên luôn hỏi trước khi gửi.
+- **Plugin có worker** (điều khiển máy): bắt buộc `minApp ≥ 0.3.38` — app từ chối cài plugin khai thiếu, `items-publish pack` tự nâng khi đóng gói.
+- Dành cho người phát triển: `scripts/dev/codex-image-check.mjs` kiểm Codex có nhận ảnh từ tool qua cầu nối không (PASS/FAIL, dùng gói ChatGPT đang đăng nhập); `apps/ui` có `npm test`.
+
 ## 0.3.39
 - **Chi phí sát thực tế**: ô đầu trang Chi phí nay là **«USD thực trả»** — chỉ tính kết nối trả theo API key; run trên gói thuê bao (Claude Pro/Max, ChatGPT, Antigravity…) không còn bị cộng vào theo giá niêm yết, chỉ hiện ở ô phụ «≈ quy đổi giá API (tham khảo)» (ẩn được). Thứ tự giá: giá riêng của kết nối → ghi đè tay → endpoint local = 0 → **giá tự động** → ước tính mặc định → «chưa có giá» (không đoán).
 - **Bảng giá mặc định cập nhật** (theo giá công bố 9/2026): Opus 5/4.5+ = 5/25 (15/75 chỉ còn cho Opus 4.0/4.1), Sonnet 3/15, Haiku 1/5, Fable 5 = 10/50; Fable 5.1 và Mythos **«chưa có giá công bố»** thay vì tạm bằng Opus; DeepSeek/OpenAI/Gemini theo từng model thay vì một giá cho cả hãng. Dòng seed cũ chưa sửa tay được thay một lần; dòng bạn đã sửa giữ nguyên.
