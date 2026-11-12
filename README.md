@@ -2,6 +2,16 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.37
+- **Kết nối ứng dụng** (trang mới, HỆ THỐNG → Kết nối ứng dụng): nối AgentDek với GitHub, Notion, Linear, Atlassian, Stripe, Sentry, Cloudflare… (máy chủ MCP chính thức) hoặc cổng trả phí Composio / Pipedream / Zapier cho Gmail, Slack và hàng trăm ứng dụng khác. Thêm từ danh mục hoặc dán URL; server lạ hoặc chưa kiểm có nhãn «chưa kiểm», không bị chặn.
+- **Đăng nhập một lần, an toàn**: AgentDek tự đăng nhập (OAuth mở trong trình duyệt của bạn, có ô «Dán địa chỉ» khi không tự quay về; hoặc khoá/PAT), giữ token trong kho bí mật của máy; nhân sự, Master, log run và giao diện không bao giờ thấy token. Nút Kiểm tra / Đăng nhập / Đăng xuất / Gỡ cùng một chỗ như trang Kết nối AI; Gỡ thu hồi đăng nhập khi server hỗ trợ. Có «Tự kiểm tra mỗi ngày» (mặc định tắt).
+- **Mọi nhân sự dùng được, bạn giới hạn khi muốn**: mặc định mọi nhân sự thấy mọi kết nối; cấm theo nhân sự, theo ứng dụng hoặc theo từng tool ở trang Nhân sự — app kiểm lại ở mỗi lời gọi, không chỉ lọc danh sách. Nhân sự gọi qua hai tool `list_apps` / `app_call`; danh sách tool của cầu nối vẫn giống hệt từng byte giữa các run.
+- **«Gửi thay bạn?»**: trước khi gửi mail, đăng bài, tạo issue hay thanh toán, AgentDek hỏi bạn (Hộp thư, thông báo, thẻ trong chat) với bản xem trước đã che bí mật; 9 phút không trả lời thì không gửi; duyệt xong app kiểm lại quyền rồi mới gửi. Tắt hỏi được theo kết nối, theo tool hoặc theo nhân sự — riêng thanh toán trong run tự động luôn hỏi. Master không được trả lời thay bạn.
+- **Báo rõ khi cần đăng nhập lại** (một dòng trong Hộp thư với nút Đăng nhập) và khi server không phản hồi (báo một lần mỗi run, thử lại sau) — run vẫn làm tiếp phần khác. Lỗi server sau khi đã gửi được báo «có thể đã gửi» để nhân sự không gửi trùng.
+- Trang Run hiện «Ứng dụng đã dùng» và dòng thời gian xác nhận. Cài đặt → Kết nối ứng dụng: bật/tắt, cách xử lý run không người trực (hỏi / từ chối).
+- Tài liệu: `docs/CONNECTED-APPS-GUIDE.md`, Hướng dẫn §4.9 (file .docx đã cập nhật), Handbook §4.1 (`list_apps`, `app_call`, «plugin dùng OAuth của app»).
+- Lưu ý khi build từ mã nguồn: server có thêm phụ thuộc `@modelcontextprotocol/sdk` — chạy `pnpm install` trong thư mục dự án trước khi build hoặc `pnpm dev`. URL trong danh mục chưa kiểm với server thật (`node scripts/dev/apps-catalog-spike.mjs` để kiểm và `--write` để ghi).
+
 ## 0.3.36
 - **Form kết nối thống nhất cho mọi loại**: cùng một thứ tự khối (Thông tin → Kết nối → Kiểm tra & phát hiện → Model & giá → Khả năng model → Hạn mức gói → Tài khoản → Plugin → Tạo ảnh → Môi trường → Nâng cao) và một thanh hành động cố định **Kiểm tra kết nối · Phát hiện model · Thử trả lời · Kiểm tra khả năng**; nút không áp dụng thì mờ kèm lý do khi rê chuột, kết quả lần trước hiện ngay cạnh nút. Phần đầu form (tên, mã, trạng thái, chấm chú ý, Xoá) giống nhau ở mọi loại.
 - **«Thử trả lời» cho mọi kết nối** (OpenRouter/DeepSeek, Claude, Codex, ACP…): một lượt 1 token, kết quả lưu trong ngày như trước; cảnh báo «chưa kiểm» chỉ hiện khi nút này có thật và chỉ với URL tuỳ chỉnh.
