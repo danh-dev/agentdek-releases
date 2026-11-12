@@ -2,6 +2,13 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.36
+- **Form kết nối thống nhất cho mọi loại**: cùng một thứ tự khối (Thông tin → Kết nối → Kiểm tra & phát hiện → Model & giá → Khả năng model → Hạn mức gói → Tài khoản → Plugin → Tạo ảnh → Môi trường → Nâng cao) và một thanh hành động cố định **Kiểm tra kết nối · Phát hiện model · Thử trả lời · Kiểm tra khả năng**; nút không áp dụng thì mờ kèm lý do khi rê chuột, kết quả lần trước hiện ngay cạnh nút. Phần đầu form (tên, mã, trạng thái, chấm chú ý, Xoá) giống nhau ở mọi loại.
+- **«Thử trả lời» cho mọi kết nối** (OpenRouter/DeepSeek, Claude, Codex, ACP…): một lượt 1 token, kết quả lưu trong ngày như trước; cảnh báo «chưa kiểm» chỉ hiện khi nút này có thật và chỉ với URL tuỳ chỉnh.
+- **«Phát hiện model» cho cả kết nối gói**: Claude (gói) lấy danh sách model từ SDK (không tốn lượt) gộp với gợi ý theo gói; Codex từ app-server; ACP như cũ; endpoint như 0.3.35 — một nút, một chỗ.
+- **OpenRouter: «Lấy model miễn phí»** — thêm các model `:free` có tool (xếp theo ngữ cảnh lớn trước), đặt mặc định nếu đang trống, không ghi đè model bạn đã chọn.
+- **Sửa**: sau «Phát hiện model» trên DeepSeek (và các preset dùng API chuẩn OpenAI) kết nối bị gắn «chưa kiểm» vì app ghi `server: openai` — loại server chung không còn làm mất trạng thái «theo preset», cấu hình đã lỡ ghi được hiểu đúng, không cần sửa file. Codex dùng endpoint riêng không còn bị coi là gói ChatGPT khi đọc hạn mức. Thống nhất chữ «Phát hiện model» (thay «Dò model»/«Phát hiện lại»).
+
 ## 0.3.35
 - **Claude Code qua gateway hoặc server trên máy**: kết nối Claude kiểu «Endpoint tuỳ chỉnh» — dán URL + token (LiteLLM, OpenRouter, Ollama có /v1/messages…), chọn model cho từng bậc Opus/Sonnet/Haiku (bậc trống = model của run). Mỗi kết nối có thư mục riêng nên đăng nhập Claude trên máy không bị đụng; token chỉ hiện «đã lưu».
 - **Codex qua endpoint riêng**: Codex chạy với base URL + khoá của bạn thay cho đăng nhập ChatGPT (Responses API, tuỳ chọn Chat). Khoá chỉ tới đúng tiến trình Codex của kết nối đó, không lọt sang engine khác.
