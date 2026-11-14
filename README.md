@@ -2,6 +2,17 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.42
+- **Plugin dùng «mượt» hơn** (keo dính cho data-tools / doc-tools / gmail):
+  - Kết quả lệnh plugin dài **không còn bị cắt ở 8 KB**: model nhận trang đầu + mã tham chiếu và đọc tiếp bằng `tool_result_read` (plugin khai `output: "large"` được 16 KB/trang); kết quả rất lớn (> 32 KB) được runner ghi file và phân trang từ file.
+  - Tham số dạng `A1:F20`, `is:unread`, `'Chi phí'!B3`, `00:01:30` **được chấp nhận**; vẫn chặn URL/giao thức (`file:`, `data:`, `javascript:`, `concat:`, `pipe:`…) và đường dẫn ngoài workspace, kể cả viết bằng escape `\/`.
+  - Plugin khai `paths: ["in","out","files[]"]` → app kiểm các đường dẫn trong dữ liệu JSON gửi vào lệnh trước khi chạy (không còn phó mặc cho plugin).
+  - **Ảnh plugin tạo ra** (biểu đồ, trang PDF…) hiện **thumbnail ngay trong transcript**, bấm xem lớn.
+  - Lệnh plugin khai `effects: "outbound"` (gửi thư, đăng bài…) **luôn hiện thẻ «Gửi thay bạn?»**, không có «Luôn cho phép»; gọi vòng qua shell không có phép sẽ bị runner từ chối. Plugin biết ai gọi mình qua `AGENTDEK_CALLER` (trang plugin / run / cài / kiểm).
+- **Skill**: nút **«Dùng bản thư viện»** khi nhân sự có skill riêng trùng id với skill thư viện — sao lưu bản riêng vào `data/backups/skills/…`, gỡ, ghim bản thư viện (thay cho lỗi «có cả bản cục bộ và bản thư viện»).
+- **Cài đặt plugin**: kiểu cài đặt **chọn tệp** (`type: "file"`, hộp chọn tệp của Windows); màn xác nhận cài hiện dung lượng các **gói bổ sung** (ví dụ Parquet ~165 MB, OCR ~23 MB); «Kiểm tra sâu» báo có/không có **LibreOffice** cho plugin cần nó (`recalc`, `md2pdf`).
+- Plugin dùng trường mới phải khai `minApp ≥ 0.3.42` — `items-publish pack` tự nâng. Danh sách tool của cầu nối đổi mô tả (một lần miss prompt-cache sau khi cập nhật).
+
 ## 0.3.41
 - **Đăng nhập bằng Firefox của AgentDek** (đường D cho khoá lấy bằng đăng nhập): khi trang đăng nhập chặn cửa sổ nhúng (Google «trình duyệt này có thể không an toàn»), bấm **«Đăng nhập bằng Firefox của AgentDek»** — app mở một Firefox riêng, profile riêng cho từng tài khoản, bạn đăng nhập như bình thường; AgentDek chỉ đọc đúng các cookie plugin đã khai và báo «Đã lấy được ✓». Không WebDriver, không điều khiển tự động, không đụng Firefox của bạn. Thanh trạng thái trong app có **«Đã đăng nhập xong» / «Huỷ»**; hết 15 phút hoặc Huỷ → đóng nhẹ, 10 giây sau mới buộc dừng. «Lấy lại» mở lại đúng profile; «Quên phiên» xoá profile. Cửa sổ nhúng bị Google chặn → hiện ngay nút chuyển sang Firefox.
 - **Firefox cho đăng nhập** trong Cài đặt → Môi trường → «Cho plugin» (cạnh Chromium): chưa có gì được tải sẵn; bấm **Tải** (~100 MB, bản chính thức từ archive.mozilla.org, phiên bản mới nhất theo product-details) — có tiến độ, Huỷ, tải tiếp khi đứt mạng, **Gỡ**; gói được đối chiếu **SHA512SUMS** trước khi cài, sai → xoá và báo lỗi (chữ ký GPG chưa kiểm — ghi rõ trên thẻ). Giải nén vào thư mục bộ công cụ, không cần quyền admin, không ghi registry; `policies.json`: chặn extension, không lưu mật khẩu, tắt telemetry/studies/Pocket, giữ tự cập nhật. Cũ hơn 1 bản lớn → nhắc cập nhật; hơn 2 bản → phải cập nhật trước khi đăng nhập. Không cập nhật/gỡ khi Firefox này đang mở.
