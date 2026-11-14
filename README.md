@@ -2,6 +2,12 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.44
+- **Sửa lỗi sập app khi sao lưu lớn** («A JavaScript error occurred in the main process — Array buffer allocation failed»): trước đây gói sao lưu được gom toàn bộ vào RAM rồi mới ghi; nay **xuất và nhập đều theo luồng từng tệp ra đĩa** (zip chuẩn, hỗ trợ Zip64 > 4 GB / > 65 535 mục; kiểm bằng Python, Info-ZIP, yauzl, Java), xuất 600 MB run chỉ tốn thêm vài chục MB RAM. Gói đang ghi là `.zip.part`, hỏng giữa chừng không để lại zip dở.
+- Đóng gói/giải nén chạy trong **worker riêng**: lỗi chỉ hiện trong Cài đặt → Sao lưu, không làm sập app; có **tiến độ** (MB / số file), mở lại trang vẫn thấy việc đang chạy; mỗi lúc một việc xuất/nhập.
+- Trước khi xuất: **ước lượng dung lượng** + kiểm **đĩa trống** (thiếu → từ chối, báo rõ); gói > 1 GB có cảnh báo thời gian; gói vượt giới hạn nhập (8 GiB/tệp, 32 GiB tổng, 200 000 mục) bị từ chối ngay lúc xuất thay vì tạo ra gói không nhập lại được.
+- Nhập an toàn hơn: kiểm toàn bộ danh mục (giới hạn, zip-slip, tên Windows kể cả `CON`/`NUL`) **trước khi xoá dữ liệu cũ** ở chế độ thay toàn bộ; mỗi tệp được **kiểm CRC** và ghi tạm rồi mới thay tệp đang có; tải gói lên theo luồng; tải gói về theo luồng; dọn tệp tạm quá 24 giờ. Sửa lỗi: kiểm tra gói từ đường dẫn mà thất bại từng **xoá luôn file zip của bạn** — nay chỉ xoá bản tải lên tạm.
+
 ## 0.3.43
 - **Sao lưu & chuyển máy biết đến plugin («Sao lưu 2.0»)**: gói sao lưu (định dạng 2, vẫn nhập được gói cũ) ghi **danh sách plugin** (id, phiên bản, nguồn cài, cấu hình không bí mật, **tên** khoá cần nhập lại, skill thư viện đi kèm). Sau khi nhập, app hiện **«Việc cần làm sau khi nhập»** (Cài đặt → Sao lưu + dải thông báo trên cùng): plugin thiếu → **«Cài từ web»** một cú (vẫn qua màn xác nhận) / «Cài từ zip»; khoá cần nhập lại; kết nối ứng dụng cần đăng nhập lại; **«Dựng lại mọi venv thiếu»**; đường dẫn `providers.yaml` không tồn tại trên máy mới (configDir, codexHome, lệnh ACP) → gợi ý «Sửa đường dẫn» khi suy ra được, không tự sửa; nhân sự ghim version skill không có → «Dùng bản có sẵn». Danh sách tự tích xong khi bạn làm; «Bỏ qua»/«Ẩn» được.
 - **Skill thư viện khi nhập**: liệt kê từng skill với trạng thái mới / giống / khác / thiếu version và ô ghi đè riêng; chế độ gộp bổ sung các `.versions` còn thiếu mà không đổi bản đang dùng (sửa lỗi từ 0.3.20: skill có trong gói nhưng màn nhập không hiện).
