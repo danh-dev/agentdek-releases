@@ -2,6 +2,9 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.50
+- **Sửa lỗi**: tiến trình con (Codex app-server, agent ACP như Antigravity) tắt đúng lúc AgentDek đang gửi lệnh cho nó làm hiện hộp «A JavaScript error occurred in the main process — write EOF». Nay lỗi được ghi nhận như một lần kết nối thoát (run báo lỗi bình thường), không còn hộp lỗi; app ghi thêm `main-errors.log` trong thư mục dữ liệu ứng dụng và chỉ báo một thông báo gọn khi gặp lỗi stream tương tự.
+
 ## 0.3.49
 - **Điều khiển máy như Claude desktop — chỉ khi cần, và chỉ ở ứng dụng bạn cho phép.** Bật «Điều khiển máy» cho nhân sự nay chỉ có nghĩa là nhân sự *được xin*. Run không cần máy thì không có viên nổi, viền hay phím nóng nào — trang run chỉ có một dòng «Điều khiển máy: sẵn sàng, chưa dùng».
 - **Thẻ xin quyền theo ứng dụng.** Lần đầu cần máy, nhân sự nêu lý do và các ứng dụng muốn dùng; bạn tick từng ứng dụng (cả ứng dụng chưa mở, «Mở ứng dụng (Start / Tìm kiếm / Run)» — chạy được chương trình qua hộp Run nhưng không cho thao tác trong File Explorer, hoặc «Mọi ứng dụng (trừ AgentDek)» — hỏi lại lần nữa) rồi chọn **Cho run này**, **Chỉ bước này** hoặc **Từ chối** (+ lời nhắn). Thẻ hiện ở trang run, Hộp thư và thẻ run trong chat; chỉ bạn cho phép được, Master không trả lời thay.
