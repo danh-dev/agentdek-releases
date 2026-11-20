@@ -2,6 +2,9 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.52
+- **Sửa lỗi**: lệnh của nhân sự chạy qua PowerShell / Node / Python của bộ công cụ AgentDek (Codex gói mọi lệnh thành `<bộ công cụ>\pwsh\…\pwsh.exe -c …`) bị bộ lọc coi là «đường dẫn ngoài run» nên Master không tự duyệt được dù việc chỉ là đọc file, `git status`. Nay đường dẫn tới trình thông dịch / bộ công cụ / thư mục cài app không tính là ra ngoài; phần lệnh lồng trong ngoặc vẫn được soi (push, xoá đệ quy, file ngoài run vẫn ra thẻ).
+
 ## 0.3.51
 - **Sửa lỗi**: ở chế độ Tự động, Master trả lời thẻ xin quyền của nhân sự gọi **lệnh plugin** (`run_plugin_command`) hay tạo ảnh vẫn bị chuyển thành thẻ chờ bạn («công cụ chưa phân loại»), nên run vẽ sơ đồ / xử lý dữ liệu đứng chờ dù đã bật «Cho phép Master tự trả lời». Nay lệnh plugin có đường dẫn nằm trong run được Master duyệt thẳng; đường dẫn ngoài run hay file bí mật vẫn ra thẻ cho bạn. Master cũng nói đúng chỗ công tắc (Cài đặt → AI chủ) thay vì «không có quyền».
 
