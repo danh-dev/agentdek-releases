@@ -2,6 +2,9 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.51
+- **Sửa lỗi**: ở chế độ Tự động, Master trả lời thẻ xin quyền của nhân sự gọi **lệnh plugin** (`run_plugin_command`) hay tạo ảnh vẫn bị chuyển thành thẻ chờ bạn («công cụ chưa phân loại»), nên run vẽ sơ đồ / xử lý dữ liệu đứng chờ dù đã bật «Cho phép Master tự trả lời». Nay lệnh plugin có đường dẫn nằm trong run được Master duyệt thẳng; đường dẫn ngoài run hay file bí mật vẫn ra thẻ cho bạn. Master cũng nói đúng chỗ công tắc (Cài đặt → AI chủ) thay vì «không có quyền».
+
 ## 0.3.50
 - **Sửa lỗi**: tiến trình con (Codex app-server, agent ACP như Antigravity) tắt đúng lúc AgentDek đang gửi lệnh cho nó làm hiện hộp «A JavaScript error occurred in the main process — write EOF». Nay lỗi được ghi nhận như một lần kết nối thoát (run báo lỗi bình thường), không còn hộp lỗi; app ghi thêm `main-errors.log` trong thư mục dữ liệu ứng dụng và chỉ báo một thông báo gọn khi gặp lỗi stream tương tự.
 
