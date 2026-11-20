@@ -2,6 +2,43 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.49
+- **Điều khiển máy như Claude desktop — chỉ khi cần, và chỉ ở ứng dụng bạn cho phép.** Bật «Điều khiển máy» cho nhân sự nay chỉ có nghĩa là nhân sự *được xin*. Run không cần máy thì không có viên nổi, viền hay phím nóng nào — trang run chỉ có một dòng «Điều khiển máy: sẵn sàng, chưa dùng».
+- **Thẻ xin quyền theo ứng dụng.** Lần đầu cần máy, nhân sự nêu lý do và các ứng dụng muốn dùng; bạn tick từng ứng dụng (cả ứng dụng chưa mở, «Mở ứng dụng (Start / Tìm kiếm / Run)» — chạy được chương trình qua hộp Run nhưng không cho thao tác trong File Explorer, hoặc «Mọi ứng dụng (trừ AgentDek)» — hỏi lại lần nữa) rồi chọn **Cho run này**, **Chỉ bước này** hoặc **Từ chối** (+ lời nhắn). Thẻ hiện ở trang run, Hộp thư và thẻ run trong chat; chỉ bạn cho phép được, Master không trả lời thay.
+  - Ứng dụng được nhận theo **file chương trình (.exe)**, không theo tiêu đề cửa sổ.
+  - Cửa sổ của ứng dụng không được phép bị **tô đen** trong ảnh nhân sự thấy, mọi thao tác lên chúng bị từ chối.
+  - Thu hồi từng ứng dụng hoặc thêm ứng dụng ngay trên bảng Màn hình; thu hồi cái cuối → về «sẵn sàng, chưa dùng».
+- **Thấy rõ đang bị điều khiển** (Windows 10 2004+): viền tím quanh đúng màn hình, khung quanh cửa sổ đang thao tác, vòng tròn theo con trỏ kèm gợn sóng và nhãn («click «Lưu»») ở mỗi bước; hổ phách khi bạn cầm máy, đỏ khi Dừng. Lớp này bấm xuyên qua được, không lấy focus và không lọt vào ảnh chụp. Viên nổi dời về giữa-trên màn hình đang bị điều khiển, thêm «· N bước».
+- **Bảng Màn hình**: nút **Dừng** luôn ở trên, không còn nằm trong vùng cuộn; bộ đếm «N bước · M lần nhìn»; nhật ký ghi cả lần nhìn, tìm và xin / cho / thu hồi quyền, có dòng «đang làm…».
+- **Thử tay & mắt** trên trang plugin `desktop-control`: con trỏ chạy ra giữa màn hình chính rồi về, không bấm, không gõ. Trang plugin nay có thể hỏi xác nhận trước khi chạy một lệnh.
+- **Cài đặt → Điều khiển máy** thêm: «Viền và con trỏ trên màn hình khi nhân sự điều khiển» (mặc định bật) và «Ứng dụng cho sẵn khi chạy không người» (mỗi dòng một .exe; trống = run không người không điều khiển máy).
+- Cần plugin **desktop-control 0.3.0** để chặn hai lớp (cả app và plugin). Plugin 0.2.0 vẫn chạy nhưng hẹp hơn: quyền ghim theo cửa sổ đang mở, chỉ app chặn thao tác, **ảnh không được tô đen** và không có viền / vòng con trỏ — bảng Màn hình nhắc cập nhật.
+
+## 0.3.48
+- **Trong chế độ Tự động, Master tự trả lời thẻ xin quyền nằm trong phạm vi run** — build/test/lint, đọc/ghi file nằm trong worktree hay thư mục làm việc của run — và tự trả lời câu hỏi của run con, không còn thẻ chờ bạn bấm.
+- **Lệnh rủi ro vẫn luôn hỏi bạn.** AgentDek chặn bằng code: Master bấm cho phép cũng chỉ thành thẻ để bạn duyệt, ghi «rủi ro — chuyển thẻ cho người dùng». Các loại bị chặn:
+  - `git push`, `reset --hard`, `clean -f`, `branch -D`;
+  - xoá đệ quy (`rm -r` theo mọi thứ tự cờ, `Remove-Item -Recurse`, `del /s`, `rd /s`);
+  - cài toàn cục (`npm`/`pnpm`/`bun -g`, `--location=global`, `yarn global`), mọi `pip install`, `cargo`/`winget`/`choco`…;
+  - publish/deploy (`npm publish`, `wrangler deploy`, `vercel --prod`, `gh pr merge`, `gh release`, `docker push`, `kubectl`/`terraform apply`…);
+  - format ổ đĩa, tắt máy, registry, tường lửa;
+  - tải về rồi chạy (`curl … | sh`, `$(curl …)`, `iex`, `-enc`);
+  - lệnh hay file trỏ ra ngoài run (`~`, `%USERPROFILE%`, `$env:`, đường dẫn tuyệt đối khác, `..`), file khoá/`.env`;
+  - câu hỏi xin chốt chính những việc đó.
+- Công cụ AgentDek **không nhận ra** (công cụ MCP, thẻ của agent ACP ngoài «chạy lệnh», lệnh ngoài workspace…) cũng chỉ thành thẻ, ghi «không nhận dạng được — chuyển thẻ cho người dùng». Đây là hàng rào thô cho lệnh thông thường, không phải hộp cát.
+- **Bản cài mới** bật sẵn việc này. **Bản cập nhật từ 0.3.47 giữ nguyên lựa chọn cũ** (Master không tự trả lời); một thông báo một lần trong **Cài đặt → AI chủ** và trong phiên Tự động hỏi bạn: «Bật» hoặc «Để nguyên». Đổi lúc nào cũng được bằng công tắc «Cho phép Master tự trả lời câu hỏi / xin phép của run con».
+- **Master được nhắc chốt quyền của run** (phiên **Tự động**). Run con xin phép hay hỏi mà sau **30 giây** chưa ai trả lời thì Master nhận một lượt `[hệ thống]` nhắc, kèm ngữ cảnh: run, nhân sự, xin gì, đường dẫn trong hay ngoài worktree, đã chờ bao lâu.
+  - Master **phải chốt**: cho phép, từ chối, trả lời câu hỏi, hoặc **để bạn quyết** kèm lý do.
+  - Chưa chốt thì nhắc thêm **một lần** (tối đa 2 lần). Sau đó AgentDek ghi «Master không chốt sau N s» vào chat và **báo bạn** (chuông + thông báo).
+  - Lượt nhắc về thẻ đã được trả lời, đã đổi hay run đã xong thì bị bỏ, không gửi cho Master. Câu trả lời của Master gắn với đúng thẻ đã nhắc, không bao giờ rơi sang thẻ sau của cùng run.
+- Không bao giờ nhắc với:
+  - thẻ chỉ bạn trả lời được: «Gửi thay bạn?», thao tác trên máy, chạy tiếp sau gián đoạn, duyệt/review/nhập liệu — với các thẻ này Master cũng không «để bạn quyết» được;
+  - phiên **Đề xuất** / **Thủ công**;
+  - khi công tắc trả lời đang tắt.
+- **Cài đặt → AI chủ** (mới): «Nhắc Master chốt quyền của run sau (giây, 0 = tắt)» — mặc định 30, tối đa 600.
+- **Nhãn trên thẻ chờ** (trang run và thẻ run trong chat): «Master để bạn quyết — <lý do>» khi Master chuyển quyết định cho bạn, «Master không chốt sau N s» khi hết lượt nhắc. Thẻ vẫn mở, bạn trả lời như thường.
+- Master trả lời một thẻ mà bạn **đã trả lời trước** giờ nhận «đã được trả lời» (không còn là lỗi từ chối): Master coi như xong, không hỏi lại, và không còn hiểu nhầm là bạn tự lo mọi thẻ sau.
+
 ## 0.3.47
 - **Cài đặt → Lưu trữ** (mới): hai dòng **Thư mục dữ liệu** và **Bộ công cụ** — đường dẫn, ổ còn trống, **dung lượng theo phần** (run theo tháng, lịch sử, plugin + cache, model ảnh, venv từng plugin, uv-cache, Chromium/Firefox, npm-global, tệp tạm) với nút «Tính lại»; dòng **Thư mục model ảnh** (image-gen) chọn/chuyển sang ổ khác.
 - **Di chuyển…** sang ổ khác ngay trong app — không còn phụ thuộc ổ C: chọn thư mục đích (trống; ổ mạng/đĩa quang bị từ chối; ổ rời hay thư mục đồng bộ OneDrive/Dropbox chỉ cảnh báo, tick «Tôi hiểu» là đi) → kiểm ổ trống ≥ 1,1× → app yêu cầu dừng run/sao lưu/điều khiển máy/worker plugin/Firefox đăng nhập/sd-server đang chạy («Dừng tất cả») → **chép theo luồng có tiến độ, chép bù tới 3 lượt, đóng băng ghi** trong lúc chốt → **đối chiếu** số tệp, tổng byte, kích thước từng tệp, sha256 các tệp quan trọng (`secrets.json`, `org/*.yaml`, chỉ mục run, cấu hình plugin, `pyvenv.cfg`) + 1 % mẫu → sửa đường dẫn **chỉ trong bản mới** (`providers.yaml` sửa tại chỗ giữ nguyên chú thích; cấu hình plugin kiểu đường dẫn; `pyvenv.cfg` và `roots` của venv; `git worktree repair`) → ghi `config.json` → **khởi động lại**. Lần mở kế: **kiểm sức khoẻ thư mục mới trước khi chạy** (org đọc được, két khoá mở được, chỉ mục hợp lệ, không có tệp mới hơn ở bản cũ) — hỏng thì **tự quay về thư mục cũ** (chưa hề bị đụng); đạt thì mới đổi tên bản cũ thành `.old-<ngày>`. Banner «Đã chuyển…» với **Kiểm tra · Hoàn tác · Xoá bản cũ** (xoá phải gõ đúng dung lượng; hoàn tác không ghi đè thư mục có dữ liệu). Mất điện giữa chừng → lần sau đề nghị «Chép tiếp». Bộ công cụ nay cấu hình trong `config.json`, không cần biến môi trường (biến `AGENTDEK_TOOLCHAIN_DIR` nếu có vẫn thắng và được ghi rõ).
