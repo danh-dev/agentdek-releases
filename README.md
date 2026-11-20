@@ -2,6 +2,37 @@
 
 Bản phát hành cho Windows tại mục **Releases**. App tự kiểm tra bản mới; mỗi phiên bản dưới đây ghi những gì thay đổi với người dùng.
 
+## 0.3.53
+- **Phiên chat cũ cũng được.** Trước đây, trong phiên Master đã mở từ trước, Master vẫn nói «mình không có quyền duyệt» dù bạn đã bật công tắc. Nguyên nhân: bản cài cũ chưa bao giờ nhận prompt mới của Master, và lịch sử phiên còn câu nói sai cũ.
+  - Prompt của Master được cập nhật (bản cũ của bạn được lưu thành một phiên bản).
+  - Quy tắc trả lời thẻ xin quyền nay được AgentDek dựng lại ở **mỗi lượt**, theo cài đặt lúc đó.
+  - Mỗi phiên Tự động đang mở nhận **một lần** dòng `[hệ thống]` báo quy tắc mới (và một lần nữa mỗi khi bạn bật/tắt công tắc), thay cho những câu Master nói sai trước đó. Trong chat có dòng «AgentDek đã báo Master…».
+- **Master nay được báo vì sao AgentDek giữ lại.** Khi Master cho phép một lệnh mà AgentDek chặn lại, kết quả nói rõ lý do (rủi ro, chưa nhận dạng, công tắc tắt, thẻ chỉ bạn trả lời, đã được trả lời). Master nói đúng với bạn: «AgentDek giữ lại vì `git push` — bạn duyệt ở thẻ». Master chỉ nhắc **Cài đặt → AI chủ** khi công tắc thật sự đang tắt.
+- **Thẻ ghi «Master đã duyệt, AgentDek giữ lại: <lý do>»** ở trang run, thẻ run con trong chat và thẻ đề xuất.
+  - Thẻ của công cụ AgentDek chưa phân loại (công cụ MCP, thẻ ACP lạ — không phải lệnh rủi ro, không phải yêu cầu thiếu thông tin) có thêm nút **«Cho phép lệnh kiểu này trong run này»**: cho phép thẻ này và các lần sau của cùng công cụ trong run đó; hết hiệu lực khi run kết thúc.
+  - Lệnh rủi ro không bao giờ có nút này.
+- **Phân loại tại nguồn.** Nơi tạo thẻ (Codex, Claude Code, agent ACP như Antigravity / Gemini, kết nối API, lệnh plugin) nay nói rõ thẻ xin gì: chạy lệnh, sửa / đọc file nào, lệnh plugin nào, đọc web. AgentDek không còn đoán theo tên công cụ.
+  - Thẻ của agent ACP («Run command», «Edit …») được Master tự duyệt khi trong phạm vi.
+  - WebFetch / WebSearch được Master tự duyệt (chính sách mạng của việc vẫn áp dụng).
+  - Run đang chạy từ bản cũ vẫn được kiểm theo cách cũ (an toàn, có thể ra thẻ nhiều hơn).
+- **Bộ lọc lệnh đọc theo cú pháp PowerShell / bash / cmd và xét cả dòng lệnh.** Lệnh bọc trong `bash -c` / `sh -c` / `pwsh -c` / `cmd /c`, `eval`, `wsl`, `Start-Process`, `-EncodedCommand` (được giải mã), trong ngoặc `( … )` hay `{ … }` đều được soi, cùng phần còn lại của dòng (`bash -c true && rm -rf ~` ra thẻ). Thứ AgentDek không đọc được — mã chạy tại chỗ (`node -e`, `python -c`), chương trình hay lệnh con là biến (`& $p`, `git $c`), alias git khai báo tại chỗ — luôn ra thẻ, không bao giờ tự chạy. Biến (`$env:CI=1`, `$null`, `$_`, `$f`), `/dev/null`, ngoặc kép lồng (`--format=\"%h\"`), đường dẫn Git Bash `/c/Users/…`, commit message, mẫu tìm kiếm (`rg '/api/v2/'`, `sed '/a/,/b/p'`) và `..\TASK.md` (workspace của run) không còn bị coi là «ra ngoài run».
+  - Lệnh rủi ro chỉ tính khi đứng ở **vị trí lệnh**: `git stash push`, commit «push notifications», test tên `shutdown` không còn ra thẻ.
+  - `.env.example` / `.sample` / `.template` không còn bị coi là file bí mật.
+  - Bộ công cụ được nhận theo **thư mục thật** (kể cả khi bạn đã chuyển sang thư mục tên khác) và thư mục cài app.
+  - Trên bộ mẫu kiểm thử (104 thẻ thực tế trên Windows cùng bộ mẫu của lần review độc lập): thẻ thừa từ 44 % xuống khoảng 1 %, và không lệnh rủi ro nào trong bộ mẫu lọt. Đây là hàng rào cho lệnh thông thường, không phải hộp cát.
+- **Thêm lớp rủi ro luôn hỏi bạn:**
+  - gửi dữ liệu ra mạng (`curl -X POST` / `-d` / `-F`, `Invoke-RestMethod` / `Invoke-WebRequest -Method Post` / `-Body`);
+  - `ssh` / `scp` / `sftp` / `rsync host:`, `Enter-PSSession`;
+  - `wrangler … --remote` khi ghi dữ liệu, `wrangler secret`;
+  - `gh pr create` / `merge`, `gh release`, `gh api -X POST`;
+  - `Start-Process -Verb RunAs`, `runas`, `sudo`;
+  - `pnpm` / `npm run deploy|release|publish` và script tên deploy / release / publish;
+  - `playwright install`;
+  - câu hỏi xin chốt deploy / đẩy bản build lên cloud, push, xoá dữ liệu, migration hay đụng dữ liệu thật, gửi email / tin nhắn cho khách.
+  - Lệnh chạy script khác của dự án (`pnpm test`, `node build.mjs`) được coi như build / test — AgentDek không đọc bên trong script.
+- **Lệnh gmail đổi hộp thư luôn hỏi bạn**: `send`, `draft`, `trash`, `label`, `archive`… (lệnh plugin gọi mạng có tên gửi / soạn nháp / xoá / gắn nhãn / lưu trữ / chuyển / huỷ đăng ký; lệnh cài đặt / tải model cũng vậy) ra thẻ cho bạn duyệt, cho tới khi plugin tự khai báo tác động. Đọc / tìm thư vẫn được Master tự duyệt.
+- **Nhắc Master gọn hơn.** Ở phiên Tự động, thẻ của run con được báo cho Master ngay (không chờ gom 30 giây). Lần nhắc đầu tiên đến ít nhất 10 giây sau lượt báo đó, không còn trùng lúc. Vẫn tối đa 2 lần nhắc. Lượt báo kèm luôn đánh giá của AgentDek (rủi ro / chưa nhận dạng) và lệnh đã bỏ phần vỏ PowerShell của bộ công cụ.
+
 ## 0.3.52
 - **Sửa lỗi**: lệnh của nhân sự chạy qua PowerShell / Node / Python của bộ công cụ AgentDek (Codex gói mọi lệnh thành `<bộ công cụ>\pwsh\…\pwsh.exe -c …`) bị bộ lọc coi là «đường dẫn ngoài run» nên Master không tự duyệt được dù việc chỉ là đọc file, `git status`. Nay đường dẫn tới trình thông dịch / bộ công cụ / thư mục cài app không tính là ra ngoài; phần lệnh lồng trong ngoặc vẫn được soi (push, xoá đệ quy, file ngoài run vẫn ra thẻ).
 
